@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -29,6 +29,11 @@ import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import { Button } from '@material-ui/core';
 import {Link as Linkear} from 'react-router-dom';
+import { useHistory } from 'react-router';
+
+//importo controller
+
+import { guardarUsuario } from "../controller/miApp.controller"
 
 function Copyright() {
   return (
@@ -145,6 +150,64 @@ const useStyles = makeStyles((theme) => ({
 export default function AgregarUsuario() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [nombre, setNombre] = React.useState('');
+  const [lastname, setLastname] = React.useState('');
+  const [dni, setDni] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('');
+ const history = useHistory()
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  }
+  const handleNombre = (event) => {
+    setNombre(event.target.value);
+  }
+  const handleDni = (event) => {
+    setDni(event.target.value);
+  }
+  const handleLastname= (event) => {
+    setLastname(event.target.value);
+  }
+  const handlePassword= (event) => {
+    setPassword(event.target.value);
+  }
+
+  const isEmpty = (stringToValidate) => {
+    if (stringToValidate !== undefined && stringToValidate !== null) {
+      return stringToValidate.length === 0
+    }
+    return true;
+  };
+
+  const subirUsuario = async function () {
+    let archivoUsuarios = false;
+
+    if (!isEmpty(nombre) && !isEmpty(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
+      archivoUsuarios = await guardarUsuario (nombre,email,lastname,dni,password)
+    }
+    else {
+      alert("Completar todos los datos.")
+    }
+  }
+
+  const redirect = async () => {
+    const ok = await subirUsuario()
+    if (ok) {
+      history.push("/lusuario")
+    }
+  }
+
+
+  const addUsuario = (usuario, resolve) => {
+    const newUsuario = { name: usuario.name, lastname: usuario.lastname, dni: usuario.dni, email: usuario.email, password: usuario.password };
+    subirUsuario(newUsuario)
+    resolve()
+  };
+
+
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -208,13 +271,16 @@ export default function AgregarUsuario() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="name"
                 label="Nombre"
                 autoFocus
+                inputProps={{
+                  onChange: (event) => handleNombre(event),
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -226,8 +292,26 @@ export default function AgregarUsuario() {
                 label="Apellido"
                 name="lastName"
                 autoComplete="lname"
+                inputProps={{
+                  onChange: (event) => handleLastname(event),
+                }}
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="dni"
+                label="Dni"
+                name="dni"
+                autoComplete="dni"
+                inputProps={{
+                  onChange: (event) => handleDni(event),
+                }}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -237,8 +321,12 @@ export default function AgregarUsuario() {
                 label="Email"
                 name="email"
                 autoComplete="email"
+                inputProps={{
+                  onChange: (event) => handleEmail(event),
+                }}
               />
             </Grid>
+            
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -249,6 +337,9 @@ export default function AgregarUsuario() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                inputProps={{
+                  onChange: (event) => handlePassword(event),
+                }}
               />
             </Grid>
             
@@ -261,6 +352,7 @@ export default function AgregarUsuario() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={() => {redirect()}}
               >
                 
                 Agregar
