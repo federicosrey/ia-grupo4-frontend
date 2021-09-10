@@ -12,6 +12,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
+import { agregarTarjeta } from '../controller/miApp.controller';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -25,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DialogoPago() {
   const [open, setOpen] = React.useState(false);
+  const [descripcion, setDescripcion] = React.useState('')
+  const [limite, setLimite] = React.useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,6 +37,13 @@ export default function DialogoPago() {
     setOpen(false);
   };
 
+  const handleDescripcion = (event) => {
+    setDescripcion(event.target.value);
+  }
+  const handleLimite = (event) => {
+    setLimite(event.target.value);
+  }
+
   const classes = useStyles();
 
   const [age, setAge] = React.useState('');
@@ -42,33 +52,52 @@ export default function DialogoPago() {
     setAge(event.target.value);
   };
 
+  const subirUsuario = async function () {
+    let archivoUsuarios = false;
+
+
+   // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
+      archivoUsuarios = await agregarTarjeta (descripcion, limite)
+    //}
+    //else {
+    //  alert("Completar todos los datos.")
+    //}
+  }
+
+  const redirect = async () => {
+    const ok = await subirUsuario()
+    /* if (ok) {
+      history.push("/lusuario")
+    } */
+  }
+
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Pagar
+        Agregar
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Pago de Resumen</DialogTitle>
+        <DialogTitle id="form-dialog-title">Agregar Tarjeta</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
-            disabled= 'true'
             margin="dense"
             id="name"
-            label="Tarjeta xxxx"
+            label="Descripción"
             type="email"
             fullWidth
+            onChange = {handleDescripcion}
           />
           <TextField
-            autoFocus
-            disabled= 'true'
             margin="dense"
             id="total"
-            label="Total: $1500"
-            type="email"
+            label="Límite"
+            type="number"
             fullWidth
+            onChange = {handleLimite}
           />
-          <FormControl required className={classes.formControl}>
+          {/* <FormControl required className={classes.formControl}>
                 <InputLabel id="demo-simple-select-required-label">Medio de Pago</InputLabel>
                 <Select
                 labelId="demo-simple-select-required-label"
@@ -84,10 +113,14 @@ export default function DialogoPago() {
                 <MenuItem value={20}>Débito</MenuItem>
                 </Select>
                 <FormHelperText>Required</FormHelperText>
-          </FormControl>
+          </FormControl> */}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button 
+            // onClick={handleClose} 
+            onClick={() => {redirect()}}
+            color="primary"
+          >
             Cancelar
           </Button>
           <Button onClick={handleClose} color="primary">

@@ -107,6 +107,14 @@ export const secondaryListItems = (
           <ListItemText primary="Usuarios" />
         </ListItem>
       </Link>
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/ltarjetas">
+        <ListItem button>
+          <ListItemIcon>
+            <PaymentIcon />
+          </ListItemIcon>
+          <ListItemText primary="Tarjetas" />
+        </ListItem>
+      </Link>
       <Link  style={{textDecoration:'none', color: 'gray'}} to = "/movimientos">
         <ListItem button>
           <ListItemIcon>

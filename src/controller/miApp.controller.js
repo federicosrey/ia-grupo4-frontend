@@ -235,6 +235,39 @@ export const updateUsuario = async function (id, dni, name, lastname, email, pas
     };
 }
 
+// Agregar Tarjeta
+export const agregarTarjeta = async function (descripcion, limite) {
+    let url = urlWebServices.agregarTarjeta;
+    const formData = new URLSearchParams();
+    formData.append('descripcion', descripcion);
+    formData.append('limite', limite);
+
+    try {
+        let response = await fetch(url, {
+            method: 'POST', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
+        });
+
+        if (response.status === 201) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+        return false;
+    };
+}
+
 //Crear encuestas
 export const guardarEncuesta = async function (titulo, sector, tamaño, questions, valorReferencia) {
 

@@ -14,6 +14,7 @@ import Movimientos from './componentes/Movimientos';
 import Cobrar from './componentes/Checkout';
 import ListUsuarios from './componentes/ListUsuarios';
 import AgregarUsuario from './componentes/AgregarUsuario';
+import ListTarjetas from './componentes/ListTarjetas';
 
 
 //import ButtonAppBar from './componentes/AppBar';
@@ -39,6 +40,7 @@ function App() {
         <Route path="/adash"   component={ADashboard} />
         <Route path="/lusuarios"   component={ListUsuarios} />
         <Route path="/ausuario"   component={AgregarUsuario} />
+        <Route path="/ltarjetas"   component={ListTarjetas} />
       </Switch>  
      
     </Router>
