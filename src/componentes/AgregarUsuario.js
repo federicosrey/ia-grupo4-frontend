@@ -150,8 +150,6 @@ const useStyles = makeStyles((theme) => ({
 export default function AgregarUsuario() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [usuarios, setUsuarios] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [nombre, setNombre] = React.useState('');
   const [lastname, setLastname] = React.useState('');
   const [dni, setDni] = React.useState('')
@@ -184,7 +182,19 @@ export default function AgregarUsuario() {
   const subirUsuario = async function () {
     let archivoUsuarios = false;
 
-    if (!isEmpty(nombre) && !isEmpty(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
+    const validateValidEmail = (stringToValidate) => {
+
+      if (typeof stringToValidate !== undefined) {
+        let lastAtPos = stringToValidate.lastIndexOf('@');
+        let lastDotPos = stringToValidate.lastIndexOf('.');
+        if (!(lastAtPos < lastDotPos && lastAtPos > 0 && stringToValidate.indexOf('@@') === -1 && lastDotPos > 2 && (stringToValidate.length - lastDotPos) > 2)) {
+          return stringToValidate.length === 0
+        }
+      }
+      return true;
+    };
+
+    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
       archivoUsuarios = await guardarUsuario (nombre,email,lastname,dni,password)
     }
     else {

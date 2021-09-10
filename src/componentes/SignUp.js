@@ -16,7 +16,12 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import {Link as Linkear} from 'react-router-dom';
+import { useHistory } from 'react-router';
+import clsx from 'clsx';
 
+//importo controller
+
+import { guardarUsuario } from "../controller/miApp.controller"
 
 function Copyright() {
   return (
@@ -54,12 +59,78 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-
+  
   const [value, setValue] = React.useState('persona');
-
+  const [open, setOpen] = React.useState(true);
+  const [nombre, setNombre] = React.useState('');
+  const [lastname, setLastname] = React.useState('');
+  const [dni, setDni] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('');
+  const history = useHistory()
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+   const handleEmail = (event) => {
+    setEmail(event.target.value);
+  }
+  const handleNombre = (event) => {
+    setNombre(event.target.value);
+  }
+  const handleDni = (event) => {
+    setDni(event.target.value);
+  }
+  const handleLastname= (event) => {
+    setLastname(event.target.value);
+  }
+  const handlePassword= (event) => {
+    setPassword(event.target.value);
+  }
+const isEmpty = (stringToValidate) => {
+    if (stringToValidate !== undefined && stringToValidate !== null) {
+      return stringToValidate.length === 0
+    }
+    return true;
+  };
+
+  const subirUsuario = async function () {
+    let archivoUsuarios = false;
+
+    const validateValidEmail = (stringToValidate) => {
+
+      if (typeof stringToValidate !== undefined) {
+        let lastAtPos = stringToValidate.lastIndexOf('@');
+        let lastDotPos = stringToValidate.lastIndexOf('.');
+        if (!(lastAtPos < lastDotPos && lastAtPos > 0 && stringToValidate.indexOf('@@') === -1 && lastDotPos > 2 && (stringToValidate.length - lastDotPos) > 2)) {
+          return stringToValidate.length === 0
+        }
+      }
+      return true;
+    };
+
+    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
+      archivoUsuarios = await guardarUsuario (nombre,email,lastname,dni,password)
+    }
+    else {
+      alert("Completar todos los datos.")
+    }
+  }
+
+  const redirect = async () => {
+    const ok = await subirUsuario()
+    if (ok) {
+      history.push("/signin")
+    }
+  }
+
+const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -83,6 +154,9 @@ export default function SignUp() {
                 id="firstName"
                 label="Nombre"
                 autoFocus
+                inputProps={{
+                  onChange: (event) => handleNombre(event),
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -94,6 +168,9 @@ export default function SignUp() {
                 label="Apellido"
                 name="lastName"
                 autoComplete="lname"
+                inputProps={{
+                  onChange: (event) => handleLastname(event),
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,6 +182,21 @@ export default function SignUp() {
                 label="Email"
                 name="email"
                 autoComplete="email"
+
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="dni"
+                label="Dni"
+                name="dni"
+                autoComplete="dni"
+                inputProps={{
+                  onChange: (event) => handleDni(event),
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -117,6 +209,9 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                inputProps={{
+                  onChange: (event) => handlePassword(event),
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -136,6 +231,7 @@ export default function SignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={() => {redirect()}}
             >
               Registrarse
             </Button>
