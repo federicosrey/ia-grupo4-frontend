@@ -110,16 +110,21 @@ const isEmpty = (stringToValidate) => {
 
     if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
       archivoUsuarios = await guardarUsuario (nombre,email,lastname,dni,password)
-    }
+      alert("Usuario creado correctamente.")
+          }
     else {
       alert("Completar todos los datos.")
+      return false;
     }
   }
 
   const redirect = async () => {
     const ok = await subirUsuario()
-    if (ok) {
+    if (ok === true) {
       history.push("/signin")
+    }
+    else if (ok ===false ){
+      history.push("/signup")
     }
   }
 
@@ -182,7 +187,9 @@ const handleDrawerOpen = () => {
                 label="Email"
                 name="email"
                 autoComplete="email"
-
+                inputProps={{
+                  onChange: (event) => handleEmail(event),
+                }}
               />
             </Grid>
             <Grid item xs={12}>

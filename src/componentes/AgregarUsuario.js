@@ -206,7 +206,7 @@ export default function AgregarUsuario() {
     const ok = await subirUsuario()
     if (ok) {
       history.push("/lusuario")
-    }
+    }    
   }
 
 
