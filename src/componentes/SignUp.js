@@ -68,6 +68,7 @@ export default function SignUp() {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('');
   const history = useHistory()
+  
   const handleChange = (event) => {
     setValue(event.target.value);
   };
