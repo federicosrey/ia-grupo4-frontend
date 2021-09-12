@@ -54,7 +54,7 @@ export default function DialogoPago() {
 
   const subirUsuario = async function () {
     let archivoUsuarios = false;
-
+    console.log("subir usuario");
 
    // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
       archivoUsuarios = await agregarTarjeta (descripcion, limite)
@@ -62,6 +62,7 @@ export default function DialogoPago() {
     //else {
     //  alert("Completar todos los datos.")
     //}
+    setOpen(false);
   }
 
   const redirect = async () => {
@@ -118,12 +119,12 @@ export default function DialogoPago() {
         <DialogActions>
           <Button 
             // onClick={handleClose} 
-            onClick={() => {redirect()}}
+            onClick={handleClose}
             color="primary"
           >
             Cancelar
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={() => {redirect()}} color="primary">
             Aceptar
           </Button>
         </DialogActions>

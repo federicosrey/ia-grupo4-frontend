@@ -15,30 +15,27 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Comercio 1', 'Calle 1', 'www.comercio1.com.ar'),
-  createData('Comercio 2', 'Avenida 1', 'www.comercio2.com.ar'),
-  createData('Comercio 3', 'Calle 2', 'www.comercio3.com.ar'),
-  createData('Comercio 4', 'Avenida 2', 'www.comercio4.com.ar'),
-  createData('Comercio 5', 'Calle 3', 'www.comercio5.com.ar'),
-];
 
 export default function Tabla() {
   const classes = useStyles();
   const [tarjetas, setTarjetas] = useState([]);
 
+  console.log("volvio")
+
+  
+
   useEffect(() => {
     getAllTarjetas();
+    console.log("useeffect")
+    
+            
   },[]);
+
+  
 
   const getAllTarjetas = async () => {
     let response  = await getTarjetas();
-    setTarjetas(response.data);
-    console.log(response.data);
+    setTarjetas(response);
   }
 
   return (
@@ -46,17 +43,17 @@ export default function Tabla() {
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Razón Social</TableCell>
-            <TableCell align="right">Dirección</TableCell>
-            <TableCell align="right">Sitio</TableCell>
+            <TableCell>Descripción</TableCell>
+            <TableCell align="right">Límite</TableCell>
+            
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">{row.name}</TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
+          {tarjetas.map((t) => (
+            <TableRow key={t.descripcion}>
+              <TableCell component="th" scope="row">{t.descripcion}</TableCell>
+              <TableCell align="right">{t.limite}</TableCell>
+              
             </TableRow>
           ))}
         </TableBody>

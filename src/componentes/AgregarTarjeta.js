@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,10 +23,18 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import AlertDialog from './AlertDialog';
-import TTarjetas from './TTarjetas';
-import {Link as Linkear} from 'react-router-dom';
+import TablaColapsable from './TablaColapsable';
+import TextField from '@material-ui/core/TextField';
+import Avatar from '@material-ui/core/Avatar';
+import PersonIcon from '@material-ui/icons/Person';
 import { Button } from '@material-ui/core';
-import DialogoPago from './DialogoPago';
+import {Link as Linkear} from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { agregarTarjeta } from '../controller/miApp.controller';
+
+//importo controller
+
+import { guardarUsuario } from "../controller/miApp.controller"
 
 function Copyright() {
   return (
@@ -120,11 +128,65 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  user: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: '#c6a700',
+    
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-export default function ListTarjetas() {
+export default function AgregarUsuario() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  
+
+ const [descripcion, setDescripcion] = React.useState('')
+ const [limite, setLimite] = React.useState('');
+
+  
+
+  const handleDescripcion = (event) => {
+    setDescripcion(event.target.value);
+  }
+  const handleLimite = (event) => {
+    setLimite(event.target.value);
+  }
+
+  const subirUsuario = async function () {
+    let archivoUsuarios = false;
+    console.log("subir usuario");
+
+   // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
+      archivoUsuarios = await agregarTarjeta (descripcion, limite)
+    //}
+    //else {
+    //  alert("Completar todos los datos.")
+    //}
+    setOpen(false);
+  }
+
+  const redirect = async () => {
+    const ok = await subirUsuario()
+    /* if (ok) {
+      history.push("/lusuario")
+    } */
+  }
+
+
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -132,13 +194,11 @@ export default function ListTarjetas() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}
-      style={{ background: 'black' }}>
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)} style={{ background: 'black' }}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -175,35 +235,87 @@ export default function ListTarjetas() {
         <Divider />
         
       </Drawer>
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.user}>
+      <Avatar className={classes.avatar}>
+          <PersonIcon />
+        </Avatar>
+
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
             
-          <Grid container spacing={1}>
-          <Grid container item xs={12} spacing={3}>
-          <Grid item xs={3}>
-            <Linkear  style={{textDecoration:'none'}} to = '/atarjeta'>
+            <Grid item xs={12}>
+            <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Descripción"
+            type="email"
+            fullWidth
+            onChange = {handleDescripcion}
+          />
+          
+            </Grid>
+
+            <Grid item xs={12}>
+            <TextField
+            margin="dense"
+            id="total"
+            label="Límite"
+            type="number"
+            fullWidth
+            onChange = {handleLimite}
+          />
+            </Grid>
+            
+            
+            <Linkear  style={{textDecoration:'none'}} to = '/ltarjetas'>
+            <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
               <Button
+                type="submit"
                 fullWidth
                 variant="contained"
-                color="black"
+                color="primary"
+                className={classes.submit}
+                onClick={() => {redirect()}}
               >
                 
                 Agregar
               </Button>
-            </Linkear>
-            </Grid>
-            </Grid>
-            <Grid container item xs={12} spacing={3}>
-            <Grid item xs>
-            <TTarjetas></TTarjetas>
-            </Grid>
-            </Grid>
+              </Grid>
+            <Grid item xs={12} sm={6}>  
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                
+                Cancelar
+              </Button>
+              </Grid>
+              </Grid>
+          </Linkear>
+          
           </Grid>
           
-        </Container>
+          
+        </form>
+      </div>
+     
+    </Container>
       </main>
 
+      
+      
     </div>
+    
+    
   );
 }

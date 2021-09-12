@@ -256,6 +256,7 @@ export const agregarTarjeta = async function (descripcion, limite) {
         });
 
         if (response.status === 201) {
+            console.log("agrego bien la tarjeta");
             return true;
         }
         else {
@@ -265,6 +266,41 @@ export const agregarTarjeta = async function (descripcion, limite) {
     catch (error) {
         console.log("error", error);
         return false;
+    };
+}
+
+// Recupero tarjetas
+export const getTarjetas = async function () {
+    let url = urlWebServices.getTarjetas;
+
+    try {
+        let response = await fetch(url, {
+            method: 'GET', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        });
+
+        if (response.status === 200) {
+            let data = await response.json();
+
+            let listaTarjetas = data.data.docs;
+            console.log("controlador: ",listaTarjetas);
+            return listaTarjetas;
+        }
+        else {
+            let vacio = [];
+            console.log("No hay tarjetas")
+            return (vacio);
+
+        }
+    }
+    catch (error) {
+        console.log("error", error);
     };
 }
 
