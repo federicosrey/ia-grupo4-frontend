@@ -166,14 +166,14 @@ export default function SignIn() {
                 }}
           />
           
-          {/*<FormControl component="fieldset">
+          <FormControl component="fieldset">
             <FormLabel component="legend"></FormLabel>
             <RadioGroup row aria-label="gender" name="gender1" value={value} onChange= {handleChange}>
               <FormControlLabel value="persona"  control={<Radio />} label="Persona" />
               <FormControlLabel value="negocio"  control={<Radio />} label="Negocio" />
               <FormControlLabel value="administrador"  control={<Radio />} label="Administrador" />
             </RadioGroup>
-              </FormControl>*/}
+              </FormControl>
          
                 
         
@@ -191,7 +191,7 @@ export default function SignIn() {
               </Button>
           </Linkear>
           <Grid container>
-            {/* <Grid item xs>
+             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
@@ -200,7 +200,7 @@ export default function SignIn() {
               <Linkear  style={{textDecoration:'none'}} to = "/signup">
                 {"No tenés una cuenta? Registrate"}
               </Linkear>
-            </Grid> */}
+            </Grid> 
           </Grid>
         </form>
       </div>

@@ -110,7 +110,7 @@ const isEmpty = (stringToValidate) => {
     };
 
     if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-      archivoUsuarios = await guardarUsuario (nombre,email,lastname,dni,password)
+      archivoUsuarios = await guardarUsuario (nombre,lastname,email,dni,password)
       alert("Usuario creado correctamente.")
           }
     else {
