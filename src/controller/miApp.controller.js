@@ -32,8 +32,11 @@ export const login = async function (login) {
                     localStorage.setItem("nombre", user.name);
                     localStorage.setItem("email", user.email);
 
-                    if (user.root === "S") {
+                    if (user.root === "A") {
                         return ({ rdo: 2, mensaje: "Ok" });//Es root
+                    }
+                    else if (user.root === "N") {
+                        return ({ rdo: 3, mensaje: "Ok neg"});//Es Negocio
                     }
                     else {
                         return ({ rdo: 0, mensaje: "Ok" });//correcto
