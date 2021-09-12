@@ -67,6 +67,7 @@ export default function SignUp() {
   const [dni, setDni] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('');
+  const [root, setRoot] = React.useState('')
   const history = useHistory()
   
   const handleChange = (event) => {
@@ -86,6 +87,9 @@ export default function SignUp() {
   }
   const handlePassword= (event) => {
     setPassword(event.target.value);
+  }
+  const handleRoot = (event) => {
+    setRoot(event.target.value)
   }
 const isEmpty = (stringToValidate) => {
     if (stringToValidate !== undefined && stringToValidate !== null) {
@@ -109,8 +113,8 @@ const isEmpty = (stringToValidate) => {
       return true;
     };
 
-    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-      archivoUsuarios = await guardarUsuario (nombre,lastname,email,dni,password)
+    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty (root) && !isEmpty(password)) {
+      archivoUsuarios = await guardarUsuario (nombre,lastname,email,dni,root,password)
       alert("Usuario creado correctamente.")
           }
     else {
@@ -226,8 +230,18 @@ const handleDrawerOpen = () => {
               <FormControl component="fieldset">
                 <FormLabel component="legend"></FormLabel>
                 <RadioGroup row aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-                  <FormControlLabel value="persona" control={<Radio />} label="Persona" />
-                  <FormControlLabel value="negocio" control={<Radio />} label="Negocio" />
+                  <FormControlLabel 
+                    value="U" 
+                    control={<Radio />} 
+                    label="Persona" 
+                    onChange={handleRoot}
+                    />
+                  <FormControlLabel 
+                    value="N" 
+                    control={<Radio />} 
+                    label="Negocio" 
+                    onChange={handleRoot}
+                    />
                 </RadioGroup>
               </FormControl>
             </Grid>

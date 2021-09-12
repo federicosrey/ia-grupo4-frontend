@@ -165,18 +165,7 @@ export default function SignIn() {
                   onChange: (event) => handlePassword(event),
                 }}
           />
-          
-          <FormControl component="fieldset">
-            <FormLabel component="legend"></FormLabel>
-            <RadioGroup row aria-label="gender" name="gender1" value={value} onChange= {handleChange}>
-              <FormControlLabel value="persona"  control={<Radio />} label="Persona" />
-              <FormControlLabel value="negocio"  control={<Radio />} label="Negocio" />
-              <FormControlLabel value="administrador"  control={<Radio />} label="Administrador" />
-            </RadioGroup>
-              </FormControl>
-         
-                
-        
+                      
           <Linkear  style={{textDecoration:'none'}} to = "/signin">
               <Button
                 type="submit"

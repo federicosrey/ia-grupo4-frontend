@@ -98,14 +98,15 @@ export const guardarContacto = async function (razonsocial, email, region, tama√
 }
 
 // Guardar usuario
-export const guardarUsuario = async function (name, lastname, email,dni, password) {
+export const guardarUsuario = async function (name, lastname, email, dni, root, password) {
     let url = urlWebServices.guardarUsuario;
     const formData = new URLSearchParams();
     formData.append('name', name);
     formData.append('lastname', lastname);
     formData.append('email', email);
     formData.append('dni', dni);
-        formData.append('password', password);
+    formData.append('root', root);
+    formData.append('password', password);
 
     try {
         let response = await fetch(url, {
@@ -202,7 +203,7 @@ export const deleteUsuario = async function (id_user) {
 }
 
 // Acutualizo usuarios
-export const updateUsuario = async function (id, dni, name, lastname, email, password) {
+export const updateUsuario = async function (id, dni, name, lastname, email, root, password) {
     let url = urlWebServices.updateUsuario;
     const formData = new URLSearchParams();
 
@@ -211,6 +212,7 @@ export const updateUsuario = async function (id, dni, name, lastname, email, pas
     formData.append('name', name);
     formData.append('lastname', lastname);
     formData.append('email', email);
+    formData.append('root', root);
     formData.append('password', password);
 
     try {
