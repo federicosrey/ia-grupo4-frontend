@@ -17,7 +17,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import {Link as Linkear} from 'react-router-dom';
 import { useHistory } from 'react-router';
-import clsx from 'clsx';
+//import clsx from 'clsx';
 
 //importo controller
 
@@ -61,7 +61,7 @@ export default function SignUp() {
   const classes = useStyles();
   
   const [value, setValue] = React.useState('persona');
-  const [open, setOpen] = React.useState(true);
+  //const [open, setOpen] = React.useState(true);
   const [nombre, setNombre] = React.useState('');
   const [lastname, setLastname] = React.useState('');
   const [dni, setDni] = React.useState('')
@@ -133,13 +133,13 @@ const isEmpty = (stringToValidate) => {
     }
   }
 
-const handleDrawerOpen = () => {
+/*const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
-  };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  };*/
+  //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
 
   return (

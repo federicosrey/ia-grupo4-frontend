@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from '@material-ui/core/Link';
+//import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,9 +22,9 @@ const rows = [
   createData(4, '02/09/2021', 'Comercio 2', 'BBVA', '•••• •••• •••• 2719', 212.79),
 ];
 
-function preventDefault(event) {
+/*function preventDefault(event) {
   event.preventDefault();
-}
+}*/
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {

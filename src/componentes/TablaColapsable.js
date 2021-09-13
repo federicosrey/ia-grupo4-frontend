@@ -15,7 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Grid from '@material-ui/core/Grid';
-import DialogoPago from './DialogoPago';
+//import DialogoPago from './DialogoPago';
 import DialogoResumen from './DialogoResumen';
 
 const useRowStyles = makeStyles({
