@@ -16,6 +16,7 @@ import ListUsuarios from './componentes/ListUsuarios';
 import AgregarUsuario from './componentes/AgregarUsuario';
 import ListTarjetas from './componentes/ListTarjetas';
 import AgregarTarjeta from './componentes/AgregarTarjeta';
+import AsignarTarjeta from './componentes/AsignarTarjeta';
 
 
 //import ButtonAppBar from './componentes/AppBar';
@@ -43,6 +44,7 @@ function App() {
         <Route path="/ausuario"   component={AgregarUsuario} />
         <Route path="/ltarjetas"   component={ListTarjetas} />
         <Route path="/atarjeta"   component={AgregarTarjeta} />
+        <Route path="/asignarTarjeta"   component={AsignarTarjeta} />
       </Switch>  
      
     </Router>

@@ -13,6 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import { agregarTarjeta } from '../controller/miApp.controller';
+import { TableRow } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -24,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function DialogoPago() {
+export default function DialogoPago(props) {
+  const  row  = props;
   const [open, setOpen] = React.useState(false);
   const [descripcion, setDescripcion] = React.useState('')
   const [limite, setLimite] = React.useState('');
@@ -81,11 +83,13 @@ export default function DialogoPago() {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Agregar Tarjeta</DialogTitle>
         <DialogContent>
+          {console.log(row.name)}
           <TextField
-            autoFocus
+            
             margin="dense"
             id="name"
             label="Descripción"
+            defaultValue= {row.name}
             type="email"
             fullWidth
             onChange = {handleDescripcion}

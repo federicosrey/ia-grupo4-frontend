@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -16,7 +16,8 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Grid from '@material-ui/core/Grid';
 //import DialogoPago from './DialogoPago';
-import DialogoResumen from './DialogoResumen';
+import DialogoPago from './DialogoPago';
+import { getUsuario } from '../controller/miApp.controller';
 
 const useRowStyles = makeStyles({
   root: {
@@ -58,57 +59,40 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
-        <TableCell align="right">{row.price}</TableCell>
-
+        <TableCell component="th" scope="row">{row.name}</TableCell>
+        <TableCell align="right">{row.lastname}</TableCell>
+        <TableCell align="right">{row.email}</TableCell>
+        <TableCell align="right">{row.dni}</TableCell>
+        <TableCell align="right">{row.root}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom component="div">
-                Movimientos
+                Tarjetas
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
                     <TableCell>Fecha</TableCell>
                     <TableCell>Comercio</TableCell>
-                    <TableCell align="right">Total($)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">{historyRow.date}</TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      
+                  {row.tarjetas.map((ut) => (
+                    <TableRow key={ut._id}>
+                      <TableCell component="th" scope="row">{ut.idTipoTarjeta}</TableCell>
+                      <TableCell>{ut.numero}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>               
               </Table>
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={2}>
-                <DialogoResumen></DialogoResumen> 
+                <DialogoPago key={row._id} row={row}></DialogoPago> 
                 </Grid>
-            </Grid>
-                
-                
-                
-                    
-              
-            
-              
-                    
-                    
-                
+            </Grid>  
             </Box>
           </Collapse>
         </TableCell>
@@ -141,23 +125,34 @@ const rows = [
 ];
 
 export default function TablaColapsable() {
+  const [usuarios, setUsuarios] = useState([]);
+
+  useEffect(() =>{
+    getAllUsuarios();
+  })  
+
+  const getAllUsuarios = async () =>{
+    let response = await getUsuario();
+    setUsuarios(response);
+  }
+
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Banco</TableCell>
-            <TableCell align="right">Número Tarjeta</TableCell>
-            <TableCell align="right">Límite</TableCell>
-            <TableCell align="right">Saldo</TableCell>
-            <TableCell align="right">Fecha Cierre</TableCell>
-            <TableCell align="right">Fecha Vencimiento</TableCell>
+            <TableCell>Nombre</TableCell>
+            <TableCell align="right">Apellido</TableCell>
+            <TableCell align="right">e-Mail</TableCell>
+            <TableCell align="right">DNI</TableCell>
+            <TableCell align="right">Tipo Usuario</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {usuarios.map((u) => (
+            <Row key={u.name} row={u} />
           ))}
           
         </TableBody>
