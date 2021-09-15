@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { getTarjetas } from '../controller/miApp.controller';
+import { getUsuario } from '../controller/miApp.controller';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -17,17 +17,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dropdown() {
+export default function DropdownUsuarios() {
   const classes = useStyles();
-  const [age, setAge] = React.useState('');
-  const [tarjetas, setTarjetas] = useState([]);
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = React.useState('');
+  const [usuarios, setUsuarios] = useState([]);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setUsuarioSeleccionado(event.target.value);
   };
 
   useEffect(() => {
-    getAllTarjetas();
+    getAllUsuarios();
     console.log("useeffect")
     
             
@@ -35,9 +35,9 @@ export default function Dropdown() {
 
   
 
-  const getAllTarjetas = async () => {
-    let response  = await getTarjetas();
-    setTarjetas(response);
+  const getAllUsuarios = async () => {
+    let response  = await getUsuario();
+    setUsuarios(response);
   }
 
   return (
@@ -45,20 +45,20 @@ export default function Dropdown() {
       
       <FormControl className={classes.formControl}>
         <Select
-          value={age}
+          value={usuarioSeleccionado}
           onChange={handleChange}
           displayEmpty
           className={classes.selectEmpty}
           inputProps={{ 'aria-label': 'Without label' }}
         >
 
-        {tarjetas.map((t) => (
-            <MenuItem value={t.descripcion}>{t.descripcion}</MenuItem>
+        {usuarios.map((u) => (
+            <MenuItem value={u.name}>{u.name}</MenuItem>
           ))}
 
           
         </Select>
-        <FormHelperText>Tarjeta</FormHelperText>
+        <FormHelperText>Usuario</FormHelperText>
       </FormControl>
       
     </div>

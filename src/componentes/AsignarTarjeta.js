@@ -32,6 +32,7 @@ import {Link as Linkear} from 'react-router-dom';
 //import { useHistory } from 'react-router';
 import { agregarTarjeta } from '../controller/miApp.controller';
 import Dropdown from './Dropdown';
+import DropdownUsuarios from './DropdownUsuarios';
 
 //importo controller
 
@@ -236,7 +237,7 @@ export default function AsignarTarjeta() {
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             
-            <Grid item xs={12}>
+           {/*  <Grid item xs={12}>
             <TextField
             autoFocus
             margin="dense"
@@ -245,9 +246,10 @@ export default function AsignarTarjeta() {
             type="email"
             fullWidth
             onChange = {handleDescripcion}
-          />
+            />
           
             </Grid>
+            
 
             <Grid item xs={12}>
             <TextField
@@ -258,6 +260,11 @@ export default function AsignarTarjeta() {
             fullWidth
             onChange = {handleLimite}
             />
+            </Grid> */}
+
+            <Grid item xs={12}>
+            <DropdownUsuarios></DropdownUsuarios>
+          
             </Grid>
 
             <Grid item xs={12}>

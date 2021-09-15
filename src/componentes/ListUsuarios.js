@@ -180,35 +180,39 @@ export default function ListUsuarios() {
             
           <Grid container spacing={1}>
           <Grid container item xs={12} spacing={3}>
-          <Grid item xs={3}>
-            <Linkear  style={{textDecoration:'none'}} to = '/ausuario'>
-              <Button
-                fullWidth
-                variant="contained"
-                color="black"
-              >
-                
-                Agregar
-              </Button>
-            </Linkear>
-            <Linkear  style={{textDecoration:'none'}} to = '/asignarTarjeta'>
-              <Button
-                fullWidth
-                variant="contained"
-                color="black"
-              >
-                
-                Asignar Tarjeta
-              </Button>
-            </Linkear>
+          
+            <Grid item xs={3}>  
+              <Linkear  style={{textDecoration:'none'}} to = '/ausuario'>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="black"
+                >
+                  
+                  Agregar
+                </Button>
+              </Linkear>
+            </Grid>
+            <Grid item xs={3}>  
+              <Linkear  style={{textDecoration:'none'}} to = '/asignarTarjeta'>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="black"
+                >
+                  
+                  Asignar Tarjeta
+                </Button>
+              </Linkear>
+            </Grid>  
             </Grid>
             </Grid>
             <Grid container item xs={12} spacing={3}>
-            <Grid item xs>
-            <TablaColapsable></TablaColapsable>
+              <Grid item xs>
+                <TablaColapsable></TablaColapsable>
+              </Grid>
             </Grid>
-            </Grid>
-          </Grid>
+         
           
         </Container>
       </main>
