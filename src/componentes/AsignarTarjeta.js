@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -32,7 +32,12 @@ import {Link as Linkear} from 'react-router-dom';
 //import { useHistory } from 'react-router';
 import { agregarTarjeta } from '../controller/miApp.controller';
 import Dropdown from './Dropdown';
-import DropdownUsuarios from './DropdownUsuarios';
+//import DropdownUsuarios from './DropdownUsuarios';
+import { getUsuario } from '../controller/miApp.controller';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 //importo controller
 
@@ -144,34 +149,63 @@ export default function AsignarTarjeta() {
 
  const [descripcion, setDescripcion] = React.useState('')
  const [limite, setLimite] = React.useState('');
+ const [isParentData, setIsParentData] = React.useState('');
 
   
 
   const handleDescripcion = (event) => {
     setDescripcion(event.target.value);
+    console.log("hasta ", isParentData);
   }
   const handleLimite = (event) => {
     setLimite(event.target.value);
+    
   }
 
   const subirUsuario = async function () {
-    let archivoUsuarios = false;
-    console.log("subir usuario");
-
+    //let archivoUsuarios = false;
+    
    // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-      archivoUsuarios = await agregarTarjeta (descripcion, limite)
+      //archivoUsuarios = await agregarTarjeta (descripcion, limite)
     //}
     //else {
     //  alert("Completar todos los datos.")
     //}
+    console.log("es asiii ", usuarioSeleccionado);
     setOpen(false);
   }
 
   const redirect = async () => {
+    
+    
     const ok = await subirUsuario()
     /* if (ok) {
       history.push("/lusuario")
     } */
+  }
+
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = React.useState('');
+  const [usuarios, setUsuarios] = useState([]);
+
+  const handleChange = (event) => {
+    setUsuarioSeleccionado(event.target.value);
+    console.log("usu selc ", usuarioSeleccionado);
+    //this.props.sendToParent(false);
+    
+  };
+
+  useEffect(() => {
+    getAllUsuarios();
+    console.log("useeffect")
+    
+            
+  },[]);
+
+  
+
+  const getAllUsuarios = async () => {
+    let response  = await getUsuario();
+    setUsuarios(response);
   }
 
 
@@ -263,12 +297,32 @@ export default function AsignarTarjeta() {
             </Grid> */}
 
             <Grid item xs={12}>
-            <DropdownUsuarios></DropdownUsuarios>
+            <FormControl className={classes.formControl}>
+                <Select
+                  value={usuarioSeleccionado}
+                  
+                  onChange={handleChange}
+                  displayEmpty
+                  className={classes.selectEmpty}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                >
+
+                {usuarios.map((u) => (
+                    <MenuItem value={u.name}>{u.name}</MenuItem>
+                  ))}
+
+                  
+                </Select>
+                <FormHelperText>Usuario</FormHelperText>
+            </FormControl>
           
             </Grid>
 
             <Grid item xs={12}>
-            <Dropdown></Dropdown>
+            <Dropdown
+               onChange = {handleLimite}
+            >
+            </Dropdown>
             </Grid>
             
             

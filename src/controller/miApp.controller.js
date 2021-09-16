@@ -274,6 +274,40 @@ export const agregarTarjeta = async function (descripcion, limite) {
     };
 }
 
+// Asignar Tarjeta
+export const asignarTarjeta = async function (descripcion, limite) {
+    let url = urlWebServices.asignarTarjeta;
+    const formData = new URLSearchParams();
+    formData.append('descripcion', descripcion);
+    formData.append('limite', limite);
+
+    try {
+        let response = await fetch(url, {
+            method: 'POST', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
+        });
+
+        if (response.status === 201) {
+            console.log("agrego bien la tarjeta");
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+        return false;
+    };
+}
+
 // Recupero tarjetas
 export const getTarjetas = async function () {
     let url = urlWebServices.getTarjetas;

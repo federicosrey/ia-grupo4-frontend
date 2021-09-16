@@ -17,13 +17,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DropdownUsuarios() {
+export default function DropdownUsuarios(props) {
   const classes = useStyles();
   const [usuarioSeleccionado, setUsuarioSeleccionado] = React.useState('');
   const [usuarios, setUsuarios] = useState([]);
 
   const handleChange = (event) => {
     setUsuarioSeleccionado(event.target.value);
+    console.log("usu selc ", usuarioSeleccionado);
+    //this.props.sendToParent(false);
+    
   };
 
   useEffect(() => {
@@ -46,6 +49,7 @@ export default function DropdownUsuarios() {
       <FormControl className={classes.formControl}>
         <Select
           value={usuarioSeleccionado}
+          
           onChange={handleChange}
           displayEmpty
           className={classes.selectEmpty}

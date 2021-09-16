@@ -19,6 +19,7 @@ const urlWebServices = {
     //Agregar Tarjetas
     agregarTarjeta: urlApi + "api/users/tarjeta",
     getTarjetas: urlApi + "api/users/getTarjetas",
+    asignarTarjeta: urlApi + "api/users/asignarTarjeta",
 
     //Encuestas
     getEncuestaID: urlApi + "api/users/encuestaid",
