@@ -275,11 +275,11 @@ export const agregarTarjeta = async function (descripcion, limite) {
 }
 
 // Asignar Tarjeta
-export const asignarTarjeta = async function (descripcion, limite) {
+export const asignarTarjeta = async function (dniusuario, tarjeta) {
     let url = urlWebServices.asignarTarjeta;
     const formData = new URLSearchParams();
-    formData.append('descripcion', descripcion);
-    formData.append('limite', limite);
+    formData.append('dni', dniusuario);
+    formData.append('tarjeta', tarjeta);
 
     try {
         let response = await fetch(url, {

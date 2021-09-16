@@ -82,7 +82,7 @@ function Row(props) {
                 <TableBody>
                   {row.tarjetas.map((ut) => (
                     <TableRow key={ut._id}>
-                      <TableCell component="th" scope="row">{ut.idTipoTarjeta}</TableCell>
+                      <TableCell component="th" scope="row">{ut.descripcion}</TableCell>
                       <TableCell>{ut.numero}</TableCell>
                     </TableRow>
                   ))}

@@ -3,45 +3,27 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-//import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-//import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-//import Paper from '@material-ui/core/Paper';
-//import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-//import NotificationsIcon from '@material-ui/icons/Notifications';
-import { /*mainListItems, secondaryListItems,*/ tertiaryListItems } from './listItems';
-//import Chart from './Chart';
-//import Deposits from './Deposits';
-//import Orders from './Orders';
+import { tertiaryListItems } from './listItems';
 import AlertDialog from './AlertDialog';
-//import TablaColapsable from './TablaColapsable';
-import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import { Button } from '@material-ui/core';
 import {Link as Linkear} from 'react-router-dom';
-//import { useHistory } from 'react-router';
-import { agregarTarjeta } from '../controller/miApp.controller';
-import Dropdown from './Dropdown';
-//import DropdownUsuarios from './DropdownUsuarios';
-import { getUsuario } from '../controller/miApp.controller';
+import { getUsuario, getTarjetas, asignarTarjeta } from '../controller/miApp.controller';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
-//importo controller
-
-//import { guardarUsuario } from "../controller/miApp.controller"
 
 const drawerWidth = 240;
 
@@ -140,65 +122,52 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export default function AsignarTarjeta() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = React.useState('');
+  const [usuarios, setUsuarios] = useState([]);
+  const [tarjetaSeleccionada, setTarjetaSeleccionada] = React.useState('');
+  const [tarjetas, setTarjetas] = useState([]);
 
- const [descripcion, setDescripcion] = React.useState('')
- const [limite, setLimite] = React.useState('');
- const [isParentData, setIsParentData] = React.useState('');
-
-  
-
-  const handleDescripcion = (event) => {
-    setDescripcion(event.target.value);
-    console.log("hasta ", isParentData);
-  }
-  const handleLimite = (event) => {
-    setLimite(event.target.value);
-    
-  }
-
-  const subirUsuario = async function () {
-    //let archivoUsuarios = false;
-    
-   // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-      //archivoUsuarios = await agregarTarjeta (descripcion, limite)
+  const asignar = async function () {
+    let procesoAsignacion = false;
+    // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
+    procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada)
     //}
     //else {
     //  alert("Completar todos los datos.")
     //}
-    console.log("es asiii ", usuarioSeleccionado);
     setOpen(false);
   }
 
   const redirect = async () => {
-    
-    
-    const ok = await subirUsuario()
+    const ok = await asignar()
     /* if (ok) {
       history.push("/lusuario")
     } */
   }
 
-  const [usuarioSeleccionado, setUsuarioSeleccionado] = React.useState('');
-  const [usuarios, setUsuarios] = useState([]);
+  const handleChangeUsuario = (event) => {
+    setUsuarioSeleccionado(event.target.value);    
+  };
 
-  const handleChange = (event) => {
-    setUsuarioSeleccionado(event.target.value);
-    console.log("usu selc ", usuarioSeleccionado);
-    //this.props.sendToParent(false);
-    
+  const handleChangeTarjeta = (event) => {
+    setTarjetaSeleccionada(event.target.value);    
   };
 
   useEffect(() => {
     getAllUsuarios();
-    console.log("useeffect")
-    
-            
+    getAllTarjetas();  
   },[]);
 
   
@@ -208,6 +177,10 @@ export default function AsignarTarjeta() {
     setUsuarios(response);
   }
 
+  const getAllTarjetas = async () => {
+    let response  = await getTarjetas();
+    setTarjetas(response);
+  }
 
 
   const handleDrawerOpen = () => {
@@ -271,44 +244,18 @@ export default function AsignarTarjeta() {
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             
-           {/*  <Grid item xs={12}>
-            <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Descripción"
-            type="email"
-            fullWidth
-            onChange = {handleDescripcion}
-            />
-          
-            </Grid>
-            
-
-            <Grid item xs={12}>
-            <TextField
-            margin="dense"
-            id="total"
-            label="Límite"
-            type="number"
-            fullWidth
-            onChange = {handleLimite}
-            />
-            </Grid> */}
-
-            <Grid item xs={12}>
+           <Grid item xs={12}>
             <FormControl className={classes.formControl}>
                 <Select
                   value={usuarioSeleccionado}
-                  
-                  onChange={handleChange}
+                  onChange={handleChangeUsuario}
                   displayEmpty
                   className={classes.selectEmpty}
                   inputProps={{ 'aria-label': 'Without label' }}
                 >
 
                 {usuarios.map((u) => (
-                    <MenuItem value={u.name}>{u.name}</MenuItem>
+                    <MenuItem value={u.dni}>{u.dni}{" - "}{u.name}</MenuItem>
                   ))}
 
                   
@@ -316,13 +263,26 @@ export default function AsignarTarjeta() {
                 <FormHelperText>Usuario</FormHelperText>
             </FormControl>
           
-            </Grid>
+          </Grid>
 
             <Grid item xs={12}>
-            <Dropdown
-               onChange = {handleLimite}
-            >
-            </Dropdown>
+            <FormControl className={classes.formControl}>
+                <Select
+                  value={tarjetaSeleccionada}
+                  onChange={handleChangeTarjeta}
+                  displayEmpty
+                  className={classes.selectEmpty}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                >
+
+                {tarjetas.map((t) => (
+                    <MenuItem value={t.descripcion}>{t.descripcion}</MenuItem>
+                ))}
+
+                  
+                </Select>
+                <FormHelperText>Tarjeta</FormHelperText>
+            </FormControl>
             </Grid>
             
             
