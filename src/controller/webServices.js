@@ -23,6 +23,7 @@ const urlWebServices = {
 
     //Agregar Movimientos
     agregarMovimiento: urlApi + "api/users/agregarMovimiento",
+    getMovimientos: urlApi + "api/users/getMovimientos",
 
     //Encuestas
     getEncuestaID: urlApi + "api/users/encuestaid",

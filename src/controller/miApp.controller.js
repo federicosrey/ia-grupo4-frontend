@@ -379,6 +379,40 @@ export const agregarMovimiento = async function (usuario, negocio, tarjeta, mont
     };
 }
 
+// Recupero usuarios
+export const getMovimientos = async function () {
+    let url = urlWebServices.getMovimientos;
+
+    try {
+        let response = await fetch(url, {
+            method: 'GET', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        });
+
+        if (response.status === 200) {
+            let data = await response.json();
+            
+            let listarmovim = data.data;
+            return listarmovim;
+        }
+        else {
+            let vacio = [];
+            console.log("No hay usuarios")
+            return (vacio);
+
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+    };
+}
+
 //Crear encuestas
 export const guardarEncuesta = async function (titulo, sector, tamaño, questions, valorReferencia) {
 

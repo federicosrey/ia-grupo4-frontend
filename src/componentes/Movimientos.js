@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,6 +24,15 @@ import { /*mainListItems, */secondaryListItems } from './listItems';
 //import Orders from './Orders';
 import AlertDialog from './AlertDialog';
 import Tabla from './NTabla';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { getMovimientos } from '../controller/miApp.controller';
+
 
 /*function Copyright() {
   return (
@@ -117,18 +126,33 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  table: {
+    minWidth: 650,
+  },
 }));
 
 export default function Movimientos() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const [movimientos, setMovimientos] = useState([]);
+
+  useEffect(() => {
+    getAllMovimientos();     
+    console.log("movimientos ", movimientos)       
+  },[]);
+
+  const getAllMovimientos = async () => {
+    let response  = await getMovimientos();
+    setMovimientos(response);
+  }
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  
 
   return (
     <div className={classes.root}>
@@ -146,7 +170,7 @@ export default function Movimientos() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            G I P E Y
+            G I P E Y | NEGOCIOS
           </Typography>
           
           <AlertDialog>
@@ -174,10 +198,30 @@ export default function Movimientos() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Tabla>
 
-          </Tabla>       
-          </Container>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>                  
+                  <TableCell>Cliente</TableCell>
+                  <TableCell align="right">Tarjeta</TableCell>
+                  <TableCell align="right">Total</TableCell>
+                  
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {movimientos.map((m) => (
+                  <TableRow key={m._id}>
+                    <TableCell component="th" scope="row">{m.dniUsuario}</TableCell>                                        
+                    <TableCell align="right">{m.numeroTarjeta}</TableCell>                   
+                    <TableCell align="right">{m.monto}</TableCell>                   
+                  </TableRow>
+                ))} 
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+        </Container>
       </main>
     </div>
   );

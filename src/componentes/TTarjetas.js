@@ -20,18 +20,9 @@ export default function Tabla() {
   const classes = useStyles();
   const [tarjetas, setTarjetas] = useState([]);
 
-  console.log("volvio")
-
-  
-
   useEffect(() => {
-    getAllTarjetas();
-    console.log("useeffect")
-    
-            
+    getAllTarjetas();            
   },[]);
-
-  
 
   const getAllTarjetas = async () => {
     let response  = await getTarjetas();
