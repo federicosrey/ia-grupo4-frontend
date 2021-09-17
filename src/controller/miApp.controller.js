@@ -343,6 +343,42 @@ export const getTarjetas = async function () {
     };
 }
 
+// Agregar movimiento
+export const agregarMovimiento = async function (usuario, negocio, tarjeta, monto) {
+    let url = urlWebServices.agregarMovimiento;
+    const formData = new URLSearchParams();
+    formData.append('dniusuario', usuario);
+    formData.append('dninegocio', negocio);
+    formData.append('numerotarjeta', tarjeta);
+    formData.append('monto', monto);
+
+    try {
+        let response = await fetch(url, {
+            method: 'POST', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
+        });
+
+        if (response.status === 201) {
+            console.log("agrego bien el movimiento");
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+        return false;
+    };
+}
+
 //Crear encuestas
 export const guardarEncuesta = async function (titulo, sector, tamaño, questions, valorReferencia) {
 

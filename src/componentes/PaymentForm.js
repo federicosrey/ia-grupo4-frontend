@@ -25,6 +25,15 @@ export default function PaymentForm() {
           />
         </Grid>
         <Grid item xs={12} md={6}>
+          <TextField
+            required
+            id="dni"
+            label="DNI"
+            fullWidth
+            autoComplete="cc-number"
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
           <TextField required id="expDate" label="Fecha de Vencimiento" fullWidth autoComplete="cc-exp" />
         </Grid>
         <Grid item xs={12} md={6}>

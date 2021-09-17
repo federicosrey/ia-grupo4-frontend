@@ -11,7 +11,7 @@ import Perfil from './componentes/Perfil';
 import NPerfil from './componentes/NPerfil';
 import Comercios from './componentes/Comercios';
 import Movimientos from './componentes/Movimientos';
-import Cobrar from './componentes/Checkout';
+import Cobrar from './componentes/AgregarMovimiento';
 import ListUsuarios from './componentes/ListUsuarios';
 import AgregarUsuario from './componentes/AgregarUsuario';
 import ListTarjetas from './componentes/ListTarjetas';
