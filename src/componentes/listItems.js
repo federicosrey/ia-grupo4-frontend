@@ -115,7 +115,7 @@ export const secondaryListItems = (
           <ListItemText primary="Tarjetas" />
         </ListItem>
       </Link>
-      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/movimientos">
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/lLiquidaciones">
         <ListItem button>
           <ListItemIcon>
             <PaymentIcon />
@@ -123,7 +123,7 @@ export const secondaryListItems = (
           <ListItemText primary="Liquidar" />
         </ListItem>
       </Link>
-      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/cobrar">
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/lCobros">
         <ListItem button>
           <ListItemIcon>
             <ShoppingCartIcon />
@@ -131,7 +131,7 @@ export const secondaryListItems = (
           <ListItemText primary="Cobrar" />
         </ListItem>
       </Link>
-      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/cobrar">
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/lPagos">
         <ListItem button>
           <ListItemIcon>
             <ShoppingCartIcon />
