@@ -186,7 +186,7 @@ export default function ListTarjetas() {
               <Button
                 fullWidth
                 variant="contained"
-                color="black"
+                color="black"                
               >
                 
                 Agregar

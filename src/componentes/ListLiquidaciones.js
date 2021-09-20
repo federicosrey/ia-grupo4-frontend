@@ -34,7 +34,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getTarjetas } from '../controller/miApp.controller';
+import { getMovimientos } from '../controller/miApp.controller';
 
 /*function Copyright() {
   return (
@@ -134,7 +134,7 @@ export default function ListLiquidaciones() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [dni, setDni] = React.useState('')
-  const [tarjetas, setTarjetas] = React.useState([]);
+  const [movimientos, setMovimientos] = React.useState([]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -149,9 +149,9 @@ export default function ListLiquidaciones() {
 
   
 
-  const getAllTarjetas = async () => {
-    let response  = await getTarjetas();
-    setTarjetas(response);
+  const getAllMovimientos = async () => {
+    let response  = await getMovimientos();
+    setMovimientos(response);
   }
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -226,7 +226,7 @@ export default function ListLiquidaciones() {
                 fullWidth
                 variant="contained"
                 color="black"
-                onClick={() => {getAllTarjetas()}}
+                onClick={() => {getAllMovimientos()}}
               >
                 
                 Buscar
@@ -240,18 +240,18 @@ export default function ListLiquidaciones() {
               <TableContainer component={Paper}>
                 <Table className={classes.table} size="small" aria-label="a dense table">
                   <TableHead>
-                    <TableRow>
-                      <TableCell>Descripción</TableCell>
-                      <TableCell align="right">Límite</TableCell>
-                      
+                    <TableRow>                    
+                      <TableCell>Usuario</TableCell>
+                      <TableCell align="right">Tarjeta</TableCell>
+                      <TableCell align="right">Total</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {tarjetas.map((t) => (
-                      <TableRow key={t.descripcion}>
-                        <TableCell component="th" scope="row">{t.descripcion}</TableCell>
-                        <TableCell align="right">{t.limite}</TableCell>
-                        
+                    {movimientos.map((m) => (
+                      <TableRow key={m._id.numeroTarjeta}>
+                        <TableCell component="th" scope="row">{m._id.numeroTarjeta}</TableCell>
+                        <TableCell align="right">{m._id.dniUsuario}</TableCell>                        
+                        <TableCell align="right">{m.total}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

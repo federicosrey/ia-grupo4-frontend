@@ -180,11 +180,11 @@ export default function SignIn() {
               </Button>
           </Linkear>
           <Grid container>
-             <Grid item xs>
+             {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid> 
+            </Grid> */} 
             <Grid item>
               <Linkear  style={{textDecoration:'none'}} to = "/signup">
                 {"No tenés una cuenta? Registrate"}
