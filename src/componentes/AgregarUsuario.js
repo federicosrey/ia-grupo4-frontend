@@ -10,18 +10,17 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-//import Badge from '@material-ui/core/Badge';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-//import Paper from '@material-ui/core/Paper';
-//import Link from '@material-ui/core/Link';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 //import NotificationsIcon from '@material-ui/icons/Notifications';
 import { /*mainListItems, secondaryListItems,*/ tertiaryListItems } from './listItems';
-//import Chart from './Chart';
-//import Deposits from './Deposits';
-//import Orders from './Orders';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import AlertDialog from './AlertDialog';
 //import TablaColapsable from './TablaColapsable';
 import TextField from '@material-ui/core/TextField';
@@ -34,19 +33,6 @@ import { useHistory } from 'react-router';
 //importo controller
 
 import { guardarUsuario } from "../controller/miApp.controller"
-
-/*function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}*/
 
 const drawerWidth = 240;
 
@@ -149,13 +135,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AgregarUsuario() {
   const classes = useStyles();
+  const [value, setValue] = React.useState('persona');
   const [open, setOpen] = React.useState(true);
   const [nombre, setNombre] = React.useState('');
   const [lastname, setLastname] = React.useState('');
   const [dni, setDni] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('');
- const history = useHistory()
+  const [root, setRoot] = React.useState('')
+  const history = useHistory()
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
   const handleEmail = (event) => {
     setEmail(event.target.value);
   }
@@ -171,7 +163,9 @@ export default function AgregarUsuario() {
   const handlePassword= (event) => {
     setPassword(event.target.value);
   }
-
+  const handleRoot = (event) => {
+    setRoot(event.target.value)
+  }
   const isEmpty = (stringToValidate) => {
     if (stringToValidate !== undefined && stringToValidate !== null) {
       return stringToValidate.length === 0
@@ -195,7 +189,7 @@ export default function AgregarUsuario() {
     };
 
     if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-      archivoUsuarios = await guardarUsuario (nombre,email,lastname,dni,password)
+      archivoUsuarios = await guardarUsuario (nombre,lastname,email,dni,root,password)
     }
     else {
       alert("Completar todos los datos.")
@@ -281,11 +275,11 @@ export default function AgregarUsuario() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="name"
+                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
+                id="firstName"
                 label="Nombre"
                 autoFocus
                 inputProps={{
@@ -312,21 +306,6 @@ export default function AgregarUsuario() {
                 variant="outlined"
                 required
                 fullWidth
-                id="dni"
-                label="Dni"
-                name="dni"
-                autoComplete="dni"
-                inputProps={{
-                  onChange: (event) => handleDni(event),
-                }}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
                 id="email"
                 label="Email"
                 name="email"
@@ -336,7 +315,20 @@ export default function AgregarUsuario() {
                 }}
               />
             </Grid>
-            
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="dni"
+                label="Dni"
+                name="dni"
+                autoComplete="dni"
+                inputProps={{
+                  onChange: (event) => handleDni(event),
+                }}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -352,40 +344,54 @@ export default function AgregarUsuario() {
                 }}
               />
             </Grid>
+            <Grid item xs={12}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend"></FormLabel>
+                <RadioGroup row aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                  <FormControlLabel 
+                    value="U" 
+                    control={<Radio />} 
+                    label="Persona" 
+                    onChange={handleRoot}
+                    />
+                  <FormControlLabel 
+                    value="N" 
+                    control={<Radio />} 
+                    label="Negocio" 
+                    onChange={handleRoot}
+                    />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+            </Grid>        
             
-            <Linkear  style={{textDecoration:'none'}} to = '/lusuarios'>
+          <Linkear  style={{textDecoration:'none'}} to = '/lusuarios'>
             <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() => {redirect()}}
-              >
-                
-                Agregar
-              </Button>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={() => {redirect()}}
+                >
+                  Agregar
+                </Button>
               </Grid>
-            <Grid item xs={12} sm={6}>  
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                
+              <Grid item xs={12} sm={6}>  
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
                 Cancelar
-              </Button>
+                </Button>
               </Grid>
-              </Grid>
+            </Grid>
           </Linkear>
-          
-          </Grid>
-          
-          
         </form>
       </div>
      
