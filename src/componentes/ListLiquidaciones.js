@@ -34,7 +34,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getMovimientos } from '../controller/miApp.controller';
+import { getMovimientos, postLiquidaciones, UpdateidLiquidacionMovimiento } from '../controller/miApp.controller';
 
 /*function Copyright() {
   return (
@@ -154,6 +154,22 @@ export default function ListLiquidaciones() {
     setMovimientos(response);
   }
 
+  const generarLiquidacion = async () => {
+    for (var i = 0; i < movimientos.length; i++){
+      let respons  = await postLiquidaciones(movimientos[i]);
+      console.log(movimientos[i].mov);
+      for(var x = 0; x < movimientos[i].mov.length; x++){
+        let res  = await UpdateidLiquidacionMovimiento(movimientos[i].mov[x],respons);
+        
+      }
+    }
+    
+      alert("Liquidaciones generadas exitosamente");
+    
+    
+  }
+  
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   
 
@@ -173,7 +189,7 @@ export default function ListLiquidaciones() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            G I P E Y
+            G I P E Y | ADMINISTRADOR
           </Typography>
           
           <AlertDialog>
@@ -204,22 +220,7 @@ export default function ListLiquidaciones() {
             
           <Grid container spacing={1}>
           <Grid container item xs={12} spacing={3}>
-          <Grid item xs={3}>
-            
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="dni"
-                label="DNI"
-                name="dni"
-                autoComplete="dni"
-                inputProps={{
-                  onChange: (event) => handleDni(event),
-                }}
-              />
-            
-            </Grid>
+          
             <Grid item xs={3}>
             
               <Button
@@ -229,7 +230,7 @@ export default function ListLiquidaciones() {
                 onClick={() => {getAllMovimientos()}}
               >
                 
-                Buscar
+                OBTENER MOVIMIENTOS
               </Button>
             
             </Grid>
@@ -249,8 +250,8 @@ export default function ListLiquidaciones() {
                   <TableBody>
                     {movimientos.map((m) => (
                       <TableRow key={m._id.numeroTarjeta}>
-                        <TableCell component="th" scope="row">{m._id.numeroTarjeta}</TableCell>
-                        <TableCell align="right">{m._id.dniUsuario}</TableCell>                        
+                        <TableCell component="th" scope="row">{m._id.dniUsuario}</TableCell>
+                        <TableCell align="right">{m._id.numeroTarjeta}</TableCell>                        
                         <TableCell align="right">{m.total}</TableCell>
                       </TableRow>
                     ))}
@@ -266,7 +267,7 @@ export default function ListLiquidaciones() {
                 fullWidth
                 variant="contained"
                 color="black"
-                onClick={() => {alert("Liquidaciones generadas")}}
+                onClick={() => {generarLiquidacion()}}
               >
                 
                 Liquidar
