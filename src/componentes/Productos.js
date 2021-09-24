@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,29 +12,19 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 //import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-//import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 //import Paper from '@material-ui/core/Paper';
 //import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 //import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, /*secondaryListItems*/ } from './listItems';
+import { mainListItems/*, secondaryListItems */} from './listItems';
 //import Chart from './Chart';
 //import Deposits from './Deposits';
-import PropTypes from 'prop-types';
+//import Orders from './Orders';
 import AlertDialog from './AlertDialog';
-import Tabla from './NTabla';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { getUsuario } from '../controller/miApp.controller';
-
-import { getMovimientos } from '../controller/miApp.controller';
-
+import TablaColapsable from './TablaColapsable';
+import TablaColapsableUser from './TablaColapsableUser';
 
 /*function Copyright() {
   return (
@@ -48,16 +38,7 @@ import { getMovimientos } from '../controller/miApp.controller';
     </Typography>
   );
 }*/
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-  bot: {
-    flexGrow: 1,
-  },
-});
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -137,66 +118,23 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
-  table: {
-    minWidth: 650,
-  },
 }));
 
-export default function Movimientos() {
+export default function Productos() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  //const [movimientos, setMovimientos] = useState([]);
-  const [usuario, setusuario] = useState([]);
-
-  {/*useEffect(() => {
-    getAllMovimientos();     
-    console.log("movimientos ", movimientos)       
-  },[]);*/}
-
-  useEffect(() => {
-    setusuario();     
-    console.log("usuario", usuario)       
-  })
-
-  function Row(props) {
-    const { row } = props;
-    const [open, setOpen] = React.useState(false);
-    const classes = useRowStyles();
-  
-  const gettusuarios = async () => {
-    let response  = await getUsuario();
-    setusuario(response);
-  };
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
-  Row.propTypes = {
-    row: PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbs: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      history: PropTypes.arrayOf(
-        PropTypes.shape({
-          amount: PropTypes.number.isRequired,
-          customerId: PropTypes.string.isRequired,
-          date: PropTypes.string.isRequired,
-        }),
-      ).isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      protein: PropTypes.number.isRequired,
-    }).isRequired,
-  };
+  //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)} 
       style={{ background: 'black' }}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -209,7 +147,7 @@ export default function Movimientos() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            G I P E Y | PERSONAS
+            G I P E Y
           </Typography>
           
           <AlertDialog>
@@ -234,38 +172,23 @@ export default function Movimientos() {
         <Divider />
         
       </Drawer>
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-
-          <TableContainer component={Paper}>
-            <Table className={classes.table} size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>                  
-                  <TableCell>Numero</TableCell>
-                  <TableCell align="right">Limite</TableCell>
-                  <TableCell align="right">Fecha Vencimiento</TableCell>
-                  <TableCell align="right">Fecha Cierre</TableCell>
-                  <TableCell align="right">Descripcion</TableCell>
-                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {usuario.map((m) => (
-                  <Row key={m.name} row={m} />
-                ))} 
-                {row.tarjetas.map((ut) => (
-                    <TableRow key={ut._id}>
-                      <TableCell component="th" scope="row">{ut.descripcion}</TableCell>
-                      <TableCell>{ut.numero}</TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
+          <Grid container spacing={3}>
+            <TablaColapsableUser></TablaColapsableUser>
+            
+            
+          </Grid>
+          
         </Container>
       </main>
+
+      
+      
     </div>
+    
+    
   );
-}
 }

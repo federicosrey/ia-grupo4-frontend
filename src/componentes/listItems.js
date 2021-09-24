@@ -47,14 +47,14 @@ export const mainListItems = (
         <ListItemText primary="Perfil" />
       </ListItem>
     </Link>
-    <Link  style={{textDecoration:'none', color: 'gray'}} to = "/comercios">
+    {/* <Link  style={{textDecoration:'none', color: 'gray'}} to = "/comercios">
       <ListItem button>
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
         <ListItemText primary="Comercios Adheridos" />
       </ListItem>
-    </Link>
+    </Link> */}
   </div>
 );
 

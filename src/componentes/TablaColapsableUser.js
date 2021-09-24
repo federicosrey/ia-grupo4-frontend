@@ -17,7 +17,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Grid from '@material-ui/core/Grid';
 //import DialogoPago from './DialogoPago';
 import DialogoPago from './DialogoPago';
-import { getUsuario } from '../controller/miApp.controller';
+import { getInfoUsuario } from '../controller/miApp.controller';
 
 const useRowStyles = makeStyles({
   root: {
@@ -120,7 +120,7 @@ const rows = [
   createData('Santander', '•••• •••• •••• 2618', 35000, 12000,'27/09/2021', '06/10/2021'),
 ];
 
-export default function TablaColapsable() {
+export default function TablaColapsableUser() {
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() =>{
@@ -128,8 +128,9 @@ export default function TablaColapsable() {
   })  
 
   const getAllUsuarios = async () =>{
-    let response = await getUsuario();
-    setUsuarios(response);
+    let response = await getInfoUsuario(localStorage.getItem("dni"));
+    console.log(response.docs);
+    setUsuarios(response.docs);
   }
 
 
@@ -148,7 +149,7 @@ export default function TablaColapsable() {
         </TableHead>
         <TableBody>
           {usuarios.map((u) => (
-            <Row key={u.name} row={u} />
+            <Row key={u._id} row={u} />
           ))}
           
         </TableBody>
