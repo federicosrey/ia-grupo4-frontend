@@ -32,6 +32,8 @@ export const login = async function (login) {
                     localStorage.setItem("nombre", user.name);
                     localStorage.setItem("email", user.email);
                     localStorage.setItem("dni", user.dni);
+                    localStorage.setItem("apellido", user.lastname);
+
 
                     if (user.root === "A") {
                         return ({ rdo: 2, mensaje: "Ok" });//Es root
