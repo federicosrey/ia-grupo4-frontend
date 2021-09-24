@@ -31,7 +31,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getMovimientos } from '../controller/miApp.controller';
+import { getUMovimientos } from '../controller/miApp.controller';
 
 
 /*function Copyright() {
@@ -142,7 +142,8 @@ export default function Movimientos() {
   },[]);
 
   const getAllMovimientos = async () => {
-    let response  = await getMovimientos();
+    let response  = await getUMovimientos(localStorage.getItem("dni"));
+    console.log("");
     setMovimientos(response);
   }
 
@@ -212,9 +213,9 @@ export default function Movimientos() {
               <TableBody>
                 {movimientos.map((m) => (
                   <TableRow key={m._id}>
-                    <TableCell component="th" scope="row">{m._id.dniUsuario}</TableCell>                                        
-                    <TableCell align="right">{m._id.numeroTarjeta}</TableCell>                   
-                    <TableCell align="right">{m.total}</TableCell>                   
+                    <TableCell component="th" scope="row">{m.dniUsuario}</TableCell>                                        
+                    <TableCell align="right">{m.numeroTarjeta}</TableCell>                   
+                    <TableCell align="right">{m.monto}</TableCell>                   
                   </TableRow>
                 ))} 
               </TableBody>
