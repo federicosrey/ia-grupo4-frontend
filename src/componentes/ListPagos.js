@@ -34,7 +34,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getTarjetas } from '../controller/miApp.controller';
+import { getNMovimientos, postPagos, UpdateidPagoMovimiento} from '../controller/miApp.controller';
 
 /*function Copyright() {
   return (
@@ -130,11 +130,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListPagos() {
+export default function ListLiquidaciones() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [dni, setDni] = React.useState('')
-  const [tarjetas, setTarjetas] = React.useState([]);
+  const [movimientos, setMovimientos] = React.useState([]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -149,10 +149,25 @@ export default function ListPagos() {
 
   
 
-  const getAllTarjetas = async () => {
-    let response  = await getTarjetas();
-    setTarjetas(response);
+  const getAllMovimientos = async () => {
+    let response  = await getNMovimientos();
+    setMovimientos(response);
   }
+
+  const generarPagos = async () => {
+    for (var i = 0; i < movimientos.length; i++){
+      let respons  = await postPagos(movimientos[i]);
+      for(var x = 0; x < movimientos[i].mov.length; x++){
+        let res  = await UpdateidPagoMovimiento(movimientos[i].mov[x],respons);
+        
+      }
+    }
+    
+      alert("Pagos generados exitosamente");
+    
+    
+  }
+  
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   
@@ -173,7 +188,7 @@ export default function ListPagos() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            G I P E Y
+            G I P E Y | ADMINISTRADOR
           </Typography>
           
           <AlertDialog>
@@ -204,32 +219,17 @@ export default function ListPagos() {
             
           <Grid container spacing={1}>
           <Grid container item xs={12} spacing={3}>
-          <Grid item xs={3}>
-            
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="dni"
-                label="DNI"
-                name="dni"
-                autoComplete="dni"
-                inputProps={{
-                  onChange: (event) => handleDni(event),
-                }}
-              />
-            
-            </Grid>
+                     
             <Grid item xs={3}>
             
               <Button
                 fullWidth
                 variant="contained"
                 color="black"
-                onClick={() => {getAllTarjetas()}}
+                onClick={() => {getAllMovimientos()}}
               >
                 
-                Buscar
+                OBTENER MOVIMIENTOS
               </Button>
             
             </Grid>
@@ -240,18 +240,16 @@ export default function ListPagos() {
               <TableContainer component={Paper}>
                 <Table className={classes.table} size="small" aria-label="a dense table">
                   <TableHead>
-                    <TableRow>
-                      <TableCell>Descripción</TableCell>
-                      <TableCell align="right">Límite</TableCell>
-                      
+                    <TableRow>                    
+                      <TableCell>Negocio</TableCell>
+                      <TableCell align="right">Total</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {tarjetas.map((t) => (
-                      <TableRow key={t.descripcion}>
-                        <TableCell component="th" scope="row">{t.descripcion}</TableCell>
-                        <TableCell align="right">{t.limite}</TableCell>
-                        
+                    {movimientos.map((m) => (
+                      <TableRow key={m._id}>
+                        <TableCell component="th" scope="row">{m._id.dniNegocio}</TableCell>                    
+                        <TableCell align="right">{m.total}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -266,10 +264,10 @@ export default function ListPagos() {
                 fullWidth
                 variant="contained"
                 color="black"
-                onClick={() => {alert("Liquidaciones generadas")}}
+                onClick={() => {generarPagos()}}
               >
                 
-                Liquidar
+                PAGAR
               </Button>
             
             </Grid>

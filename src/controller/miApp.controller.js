@@ -414,6 +414,75 @@ export const getMovimientos = async function () {
     };
 }
 
+export const getNMovimientos = async function () {
+    let url = urlWebServices.getNMovimientos;
+
+    try {
+        let response = await fetch(url, {
+            method: 'GET', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        });
+
+        if (response.status === 200) {
+            let data = await response.json();
+            
+            let listarmovim = data.data;
+            return listarmovim;
+        }
+        else {
+            let vacio = [];
+            console.log("No hay usuarios")
+            return (vacio);
+
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+    };
+}
+
+export const getLiquidaciones = async function (dniusuario) {
+    let url = urlWebServices.getLiquidaciones;
+    const formData = new URLSearchParams();
+    formData.append('dniUsuario', dniusuario);
+    
+    try {
+        let response = await fetch(url, {
+            method: 'POST', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body:formData
+        });
+
+        if (response.status === 200) {
+            let data = await response.json();
+            
+            let listarliqui = data.data;
+            return listarliqui;
+        }
+        else {
+            let vacio = [];
+            console.log("No hay liquidaciones")
+            return (vacio);
+
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+    };
+}
+
 export const postLiquidaciones = async function (movimientos) {
     let url = urlWebServices.postLiquidaciones;
     const formData = new URLSearchParams();
@@ -456,11 +525,156 @@ export const postLiquidaciones = async function (movimientos) {
     
 }
 
+export const postPagos = async function (movimientos) {
+    let url = urlWebServices.postPagos;
+    const formData = new URLSearchParams();
+    formData.append('dninegocio', movimientos._id.dniNegocio);
+    formData.append('total', movimientos.total);
+    console.log(movimientos._id.dniNegocio);
+    console.log(movimientos.total);
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+            
+                    if (response.status === 201) {
+                        let data = await response.json();
+            
+                        
+                        
+                        return data.data;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}
+
+export const postCobros = async function (liquidacion) {
+    let url = urlWebServices.postCobros;
+    const formData = new URLSearchParams();
+    formData.append('dniUsuario', liquidacion.dniUsuario);
+    formData.append('total', liquidacion.total);
+    
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+            
+                    if (response.status === 201) {
+                        let data = await response.json();
+            
+                        
+                        
+                        return data.data;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}
+
 export const UpdateidLiquidacionMovimiento = async function (idMovimiento, idLiquidacion) {
     let url = urlWebServices.UpdateidLiquidacionMovimiento;
     const formData = new URLSearchParams();
     formData.append('idmovimiento', idMovimiento);
     formData.append('idliquidacion', idLiquidacion);
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+                    
+                    if (response.status === 201) {
+                        
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}
+
+export const UpdateidPagoMovimiento = async function (idMovimiento, idPago) {
+    let url = urlWebServices.UpdateidPagoMovimiento;
+    const formData = new URLSearchParams();
+    formData.append('idmovimiento', idMovimiento);
+    formData.append('idpago', idPago);
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+                    
+                    if (response.status === 201) {
+                        
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}
+
+export const UpdateidCobroLiquidacion = async function (idLiquidacion, idCobro) {
+    let url = urlWebServices.UpdateidCobroLiquidacion;
+    const formData = new URLSearchParams();
+    formData.append('idLiquidacion', idLiquidacion);
+    formData.append('idCobro', idCobro);
 
                 try {
                     let response = await fetch(url, {

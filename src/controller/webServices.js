@@ -25,9 +25,19 @@ const urlWebServices = {
     agregarMovimiento: urlApi + "api/users/agregarMovimiento",
     getMovimientos: urlApi + "api/users/getMovimientos",
     UpdateidLiquidacionMovimiento: urlApi + "api/users/UpdateidLiquidacionMovimiento",
+    getNMovimientos: urlApi + "api/users/getNMovimientos",
+    UpdateidPagoMovimiento: urlApi + "api/users/UpdateidPagoMovimiento",
 
     //Liquidaciones
     postLiquidaciones: urlApi + "api/users/postLiquidaciones",
+    getLiquidaciones: urlApi + "api/users/getLiquidaciones",
+    UpdateidCobroLiquidacion: urlApi + "api/users/UpdateidCobroLiquidacion",
+
+    //Pagos
+    postPagos: urlApi + "api/users/agregarPago",
+
+    //Pagos
+    postCobros: urlApi + "api/users/agregarCobro",
 
     //Encuestas
     getEncuestaID: urlApi + "api/users/encuestaid",

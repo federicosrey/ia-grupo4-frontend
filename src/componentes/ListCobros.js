@@ -34,7 +34,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getTarjetas } from '../controller/miApp.controller';
+import { getLiquidaciones, getTarjetas, postCobros, UpdateidCobroLiquidacion } from '../controller/miApp.controller';
 
 /*function Copyright() {
   return (
@@ -149,9 +149,24 @@ export default function ListCobros() {
 
   
 
-  const getAllTarjetas = async () => {
-    let response  = await getTarjetas();
-    setTarjetas(response);
+  const getAllLiquidaciones = async () => {
+    let response  = await getLiquidaciones(dni);
+    
+    setTarjetas(response.docs);
+  }
+
+  const generarCobro = async () => {
+    for (var i = 0; i < tarjetas.length; i++){
+      let respons  = await postCobros(tarjetas[i]);
+      
+      let res  = await UpdateidCobroLiquidacion(tarjetas[i]._id,respons);
+        
+      
+    }
+    
+      alert("Cobro generado exitosamente");
+    
+    
   }
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -226,7 +241,7 @@ export default function ListCobros() {
                 fullWidth
                 variant="contained"
                 color="black"
-                onClick={() => {getAllTarjetas()}}
+                onClick={() => {getAllLiquidaciones()}}
               >
                 
                 Buscar
@@ -241,19 +256,19 @@ export default function ListCobros() {
                 <Table className={classes.table} size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Descripción</TableCell>
-                      <TableCell align="right">Límite</TableCell>
+                      <TableCell>Tarjeta</TableCell>
+                      <TableCell align="right">Total</TableCell>
                       
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {tarjetas.map((t) => (
-                      <TableRow key={t.descripcion}>
-                        <TableCell component="th" scope="row">{t.descripcion}</TableCell>
-                        <TableCell align="right">{t.limite}</TableCell>
+                      <TableRow key={t._id}>
+                        <TableCell component="th" scope="row">{t.numeroTarjeta}</TableCell>
+                        <TableCell align="right">{t.total}</TableCell>
                         
                       </TableRow>
-                    ))}
+                    ))} 
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -266,10 +281,10 @@ export default function ListCobros() {
                 fullWidth
                 variant="contained"
                 color="black"
-                onClick={() => {alert("Liquidaciones generadas")}}
+                onClick={() => {generarCobro()}}
               >
                 
-                Liquidar
+                COBRAR
               </Button>
             
             </Grid>
