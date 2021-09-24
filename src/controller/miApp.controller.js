@@ -380,7 +380,7 @@ export const agregarMovimiento = async function (usuario, negocio, tarjeta, mont
     };
 }
 
-// Recupero usuarios
+// Recupero movimientos de usuarios
 export const getMovimientos = async function () {
     let url = urlWebServices.getMovimientos;
 
@@ -414,6 +414,10 @@ export const getMovimientos = async function () {
     };
 }
 
+<<<<<<< HEAD
+=======
+// Recupero movimientos de negocios
+>>>>>>> fede2
 export const getNMovimientos = async function () {
     let url = urlWebServices.getNMovimientos;
 
@@ -437,6 +441,7 @@ export const getNMovimientos = async function () {
         }
         else {
             let vacio = [];
+<<<<<<< HEAD
             console.log("No hay usuarios")
             return (vacio);
 
@@ -474,6 +479,9 @@ export const getLiquidaciones = async function (dniusuario) {
         else {
             let vacio = [];
             console.log("No hay liquidaciones")
+=======
+            console.log("No hay movimientos de negocios")
+>>>>>>> fede2
             return (vacio);
 
         }
