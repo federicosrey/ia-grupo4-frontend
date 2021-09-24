@@ -208,20 +208,20 @@ export default function Productos() {
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
-                required
+                disabled
                 fullWidth
                 id="firstName"
-                label="Nombre"
+                label={localStorage.getItem("nombre")}
                 autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
-                required
+                disabled
                 fullWidth
                 id="lastName"
-                label="Apellido"
+                label={localStorage.getItem("apellido")}
                 name="lastName"
                 autoComplete="lname"
               />
@@ -229,10 +229,10 @@ export default function Productos() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+                disabled
                 fullWidth
                 id="email"
-                label="Email"
+                label={localStorage.getItem("email")}
                 name="email"
                 autoComplete="email"
               />
@@ -240,14 +240,14 @@ export default function Productos() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+                disabled
                 fullWidth
-                name="password"
-                label="Contraseña"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+                name="tipe"
+                label="Persona"
+                type="tipe"
+                id="tipe"
+                autoComplete="tipe"
+                />
             </Grid>
             
           </Grid>
