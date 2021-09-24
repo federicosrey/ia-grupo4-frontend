@@ -173,7 +173,7 @@ export default function ListPagos() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            G I P E Y
+            G I P E Y | ADMINISTRADOR
           </Typography>
           
           <AlertDialog>

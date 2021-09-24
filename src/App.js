@@ -20,6 +20,7 @@ import AsignarTarjeta from './componentes/AsignarTarjeta';
 import ListLiquidaciones from './componentes/ListLiquidaciones';
 import ListCobros from './componentes/ListCobros';
 import ListPagos from './componentes/ListPagos';
+import NMovimientos from './componentes/NMovimientos';
 
 
 //import ButtonAppBar from './componentes/AppBar';
@@ -51,6 +52,7 @@ function App() {
         <Route path="/lLiquidaciones"   component={ListLiquidaciones} />
         <Route path="/lCobros"   component={ListCobros} />
         <Route path="/lPagos"   component={ListPagos} />
+        <Route path="/nmovimientos"   component={NMovimientos} />
       </Switch>  
      
     </Router>

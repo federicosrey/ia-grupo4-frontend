@@ -23,6 +23,14 @@ export const mainListItems = (
         <ListItemText primary="Home" />
       </ListItem>
     </Link>  
+    <Link  style={{textDecoration:'none', color: 'gray'}} to = "/movimientos">
+        <ListItem button>
+          <ListItemIcon>
+            <PaymentIcon />
+          </ListItemIcon>
+          <ListItemText primary="Movimientos" />
+        </ListItem>
+      </Link>
     <Link  style={{textDecoration:'none', color: 'gray'}} to = "/productos">
       <ListItem button>
         <ListItemIcon>
@@ -61,7 +69,7 @@ export const secondaryListItems = (
           <ListItemText primary="Home" />
         </ListItem>
       </Link>  
-      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/movimientos">
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/nmovimientos">
         <ListItem button>
           <ListItemIcon>
             <PaymentIcon />

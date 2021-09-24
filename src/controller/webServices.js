@@ -1,5 +1,5 @@
 const urlApi = "http://localhost:4000/";
-//const urlApi = "https://api-benchmark-back.herokuapp.com/";
+//const urlApi = "https://ia-grupo4-backend.herokuapp.com/";
 console.log("url", urlApi);
 
 const urlWebServices = {
@@ -24,6 +24,7 @@ const urlWebServices = {
     //Agregar Movimientos
     agregarMovimiento: urlApi + "api/users/agregarMovimiento",
     getMovimientos: urlApi + "api/users/getMovimientos",
+    getNMovimientos: urlApi + "api/users/getnMovimientos",
     UpdateidLiquidacionMovimiento: urlApi + "api/users/UpdateidLiquidacionMovimiento",
 
     //Liquidaciones
