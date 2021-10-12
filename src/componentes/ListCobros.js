@@ -146,12 +146,9 @@ export default function ListCobros() {
   const handleDni = (event) => {
     setDni(event.target.value);
   }
-
   
-
   const getAllLiquidaciones = async () => {
     let response  = await getLiquidaciones(dni);
-    
     setTarjetas(response.docs);
   }
 
@@ -161,9 +158,7 @@ export default function ListCobros() {
       
       let res  = await UpdateidCobroLiquidacion(tarjetas[i]._id,respons);
         
-      
     }
-    
       alert("Cobro generado exitosamente");
     
     

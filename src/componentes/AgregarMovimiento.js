@@ -177,11 +177,11 @@ export default function AgregarUsuario() {
 
   const agregarMov = async function () {
     let archivoMovimiento = false;
-
+    let dnineg = localStorage.getItem("dni");
     
 
     //if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-      archivoMovimiento = await agregarMovimiento (dni, '37835366', tarjeta, monto);
+      archivoMovimiento = await agregarMovimiento (dni, dnineg, tarjeta, monto);
     //}
    //else {
     //  alert("Completar todos los datos.")
@@ -193,11 +193,6 @@ export default function AgregarUsuario() {
     const ok = await agregarMov()
     
   }
-
-
- 
-
-
 
   const handleDrawerOpen = () => {
     setOpen(true);
