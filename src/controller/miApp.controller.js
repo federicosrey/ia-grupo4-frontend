@@ -283,8 +283,10 @@ export const asignarTarjeta = async function (dniusuario, tarjeta) {
     const formData = new URLSearchParams();
     formData.append('dni', dniusuario);
     formData.append('tarjeta', tarjeta);
+    console.log("entro al control");
 
-    try {
+    //try {
+        console.log("respue ");
         let response = await fetch(url, {
             method: 'POST', // or 'PUT'
             mode: "cors",
@@ -296,19 +298,22 @@ export const asignarTarjeta = async function (dniusuario, tarjeta) {
             },
             body: formData
         });
-
+        console.log("jr ", response.body);    
         if (response.status === 201) {
-            console.log("agrego bien la tarjeta");
-            return true;
+            let data = await response.json();
+            
+            let listarliqui = data.message;
+            return listarliqui;
+            
         }
         else {
             return false;
         }
-    }
+    /* }
     catch (error) {
         console.log("error", error);
         return false;
-    };
+    }; */
 }
 
 // Recupero tarjetas
@@ -417,38 +422,40 @@ export const getMovimientos = async function () {
 }
 
 // Recupero movimientos de negocios
-export const getNMovimientos = async function () {
-    let url = urlWebServices.getNMovimientos;
-
-    try {
-        let response = await fetch(url, {
-            method: 'GET', // or 'PUT'
-            mode: "cors",
-            headers: {
-                'Accept': 'application/x-www-form-urlencoded',
-                'x-access-token': localStorage.getItem('x'),
-                'Origin': 'http://localhost:3000',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-        });
-
-        if (response.status === 200) {
-            let data = await response.json();
-            
-            let listarmovim = data.data;
-            return listarmovim;
+export const getNMovimientos = async function (dninegocio) {
+    
+        let url = urlWebServices.getNMovimientos;
+        const formData = new URLSearchParams();
+        formData.append('dniNegocio', dninegocio);
+        try {
+            let response = await fetch(url, {
+                method: 'POST', // or 'PUT'
+                mode: "cors",
+                headers: {
+                    'Accept': 'application/x-www-form-urlencoded',
+                    'x-access-token': localStorage.getItem('x'),
+                    'Origin': 'http://localhost:3000',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body:formData
+            });
+            if (response.status === 200) {
+                let data = await response.json();
+                let listarliqui = data.data.docs;
+                return listarliqui;
+            }
+            else {
+                let vacio = [];
+                console.log("No hay liquidaciones")
+                console.log("No hay movimientos de negocios")
+                return (vacio);
+    
+            }
         }
-        else {
-            let vacio = [];
-            console.log("No hay usuarios")
-            return (vacio);
-
-        }
+        catch (error) {
+            console.log("error", error);
+        };
     }
-    catch (error) {
-        console.log("error", error);
-    };
-}
 
 export const getLiquidaciones = async function (dniusuario) {
     let url = urlWebServices.getLiquidaciones;
@@ -527,7 +534,6 @@ export const getUMovimientos = async function (dniusuario) {
     let url = urlWebServices.getUMovimientos;
     const formData = new URLSearchParams();
     formData.append('dniUsuario', dniusuario);
-    
     try {
         let response = await fetch(url, {
             method: 'POST', // or 'PUT'
@@ -540,11 +546,9 @@ export const getUMovimientos = async function (dniusuario) {
             },
             body:formData
         });
-
         if (response.status === 200) {
             let data = await response.json();
-            
-            let listarliqui = data.data;
+            let listarliqui = data.data.docs;
             return listarliqui;
         }
         else {

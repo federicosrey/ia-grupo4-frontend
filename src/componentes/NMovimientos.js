@@ -12,14 +12,13 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 //import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+//import Grid from '@material-ui/core/Grid';
 //import Paper from '@material-ui/core/Paper';
 //import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { Button, TextField } from '@material-ui/core';
 //import NotificationsIcon from '@material-ui/icons/Notifications';
-import { /*mainListItems, */secondaryListItems } from './listItems';
+import { mainListItems, secondaryListItems, /*secondaryListItems*/ } from './listItems';
 //import Chart from './Chart';
 //import Deposits from './Deposits';
 //import Orders from './Orders';
@@ -33,7 +32,21 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { getNMovimientos } from '../controller/miApp.controller';
+import dateFormat from "dateformat";
 
+
+/*function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}*/
 
 const drawerWidth = 240;
 
@@ -119,19 +132,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NMovimientos() {
+export default function Movimientos() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [nmovimientos, setnMovimientos] = useState([]);
+  const [movimientos, setMovimientos] = useState([]);
 
   useEffect(() => {
-    getnAllMovimientos();     
-    console.log("nmovimientos ", nmovimientos)       
+    getAllMovimientos();     
+    console.log("movimientos ", movimientos)       
   },[]);
 
-  const getnAllMovimientos = async () => {
-    let response  = await getNMovimientos();
-    setnMovimientos(response);
+  const getAllMovimientos = async () => {
+    let response  = await getNMovimientos(localStorage.getItem("dni"));
+    console.log(response);
+    setMovimientos(response);
   }
 
   const handleDrawerOpen = () => {
@@ -158,7 +172,7 @@ export default function NMovimientos() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            G I P E Y | NEGOCIOS
+            G I P E Y | PERSONAS
           </Typography>
           
           <AlertDialog>
@@ -186,62 +200,31 @@ export default function NMovimientos() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-        <Grid container spacing={1}>
-          <Grid container item xs={12} spacing={3}>
-          
-            <Grid item xs={3}>
-            
-              {/*<Button
-                fullWidth
-                variant="contained"
-                color="black"
-                onClick={() => {getnAllMovimientos()}}
-              >
-                
-                OBTENER MOVIMIENTOS
-              </Button>*/}
-            
-            </Grid>
-           
-            </Grid>
-            <Grid container item xs={12} spacing={2}>
-            <Grid item xs>
+
           <TableContainer component={Paper}>
             <Table className={classes.table} size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>                  
-                  <TableCell>Negocio</TableCell>
+                  <TableCell>Fecha</TableCell>
+                  <TableCell>DNI Cliente</TableCell>
+                  <TableCell>Tarjeta</TableCell>
                   <TableCell align="right">Total</TableCell>
                   
                 </TableRow>
               </TableHead>
               <TableBody>
-                {nmovimientos.map((m) => (
-                  <TableRow key={m._id.dniNegocio}>
-                    <TableCell component="th" scope="row">{m._id.dniNegocio}</TableCell>                                        
-                    <TableCell align="right">{m.total}</TableCell>                   
-                  </TableRow>
-                ))} 
+                {movimientos.map((m) => (
+                    <TableRow key={m._id}>
+                      <TableCell component="th" scope="row">{dateFormat(m.fecha,"dd/mm/yyyy")}</TableCell>
+                      <TableCell>{m.dniUsuario}</TableCell>
+                      <TableCell>{m.numeroTarjeta}</TableCell>
+                      <TableCell align="right">{m.monto}</TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
-          </Grid>
-            
-            </Grid>
-            <Grid item xs={3}>
-            
-              {/*<Button
-                fullWidth
-                variant="contained"
-                color="black"
-                onClick={() => {generarLiquidacion()}}
-              >
-                
-                Liquidar
-              </Button>*/}            
-            </Grid>
-          </Grid>
-          
+
         </Container>
       </main>
     </div>

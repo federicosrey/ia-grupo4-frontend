@@ -25,7 +25,7 @@ const urlWebServices = {
     //Agregar Movimientos
     agregarMovimiento: urlApi + "api/users/agregarMovimiento",
     getMovimientos: urlApi + "api/users/getMovimientos",
-    getNMovimientos: urlApi + "api/users/getnMovimientos",
+    getNMovimientos: urlApi + "api/users/getNMovimientos",
     UpdateidLiquidacionMovimiento: urlApi + "api/users/UpdateidLiquidacionMovimiento",
     
     getUMovimientos: urlApi + "api/users/getUMovimientos",

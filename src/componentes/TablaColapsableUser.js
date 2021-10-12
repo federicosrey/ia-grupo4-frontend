@@ -123,9 +123,9 @@ const rows = [
 export default function TablaColapsableUser() {
   const [usuarios, setUsuarios] = useState([]);
 
-  useEffect(() =>{
-    getAllUsuarios();
-  })  
+  useEffect(() => {
+    getAllUsuarios();     
+  },[]);   
 
   const getAllUsuarios = async () =>{
     let response = await getInfoUsuario(localStorage.getItem("dni"));

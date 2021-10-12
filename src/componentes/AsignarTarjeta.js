@@ -140,21 +140,28 @@ export default function AsignarTarjeta() {
   const [tarjetas, setTarjetas] = useState([]);
 
   const asignar = async function () {
-    let procesoAsignacion = false;
+    
+    console.log(" front ", usuarioSeleccionado, tarjetaSeleccionada);
     // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-    procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada)
+    var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada);
     //}
     //else {
     //  alert("Completar todos los datos.")
     //}
-    setOpen(false);
+    alert(procesoAsignacion);
+    
+    
+    
   }
 
   const redirect = async () => {
     const ok = await asignar()
-    /* if (ok) {
-      history.push("/lusuario")
-    } */
+    console.log("aca")
+    alert("aca")
+    if (ok) {
+      //setOpen(false);
+      //history.push("/lusuario")
+    } 
   }
 
   const handleChangeUsuario = (event) => {
@@ -247,7 +254,7 @@ export default function AsignarTarjeta() {
            <Grid item xs={12}>
             <FormControl className={classes.formControl}>
                 <Select
-                  value={usuarioSeleccionado}
+                  value={usuarios._id}
                   onChange={handleChangeUsuario}
                   displayEmpty
                   className={classes.selectEmpty}
@@ -255,7 +262,7 @@ export default function AsignarTarjeta() {
                 >
 
                 {usuarios.map((u) => (
-                    <MenuItem value={u.dni}>{u.dni}{" - "}{u.name}</MenuItem>
+                    <MenuItem value={u._id}>{u.dni}{" - "}{u.name}</MenuItem>
                   ))}
 
                   
@@ -286,7 +293,7 @@ export default function AsignarTarjeta() {
             </Grid>
             
             
-            <Linkear  style={{textDecoration:'none'}} to = '/ltarjetas'>
+            <Linkear  style={{textDecoration:'none'}} to = '/ltarjetas'> 
             <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Button

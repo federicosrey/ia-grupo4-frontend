@@ -32,6 +32,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { getUMovimientos } from '../controller/miApp.controller';
+import dateFormat from "dateformat";
 
 
 /*function Copyright() {
@@ -143,7 +144,7 @@ export default function Movimientos() {
 
   const getAllMovimientos = async () => {
     let response  = await getUMovimientos(localStorage.getItem("dni"));
-    console.log("");
+    console.log(response);
     setMovimientos(response);
   }
 
@@ -204,20 +205,20 @@ export default function Movimientos() {
             <Table className={classes.table} size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>                  
-                  <TableCell>Cliente</TableCell>
-                  <TableCell align="right">Tarjeta</TableCell>
+                  <TableCell>Fecha</TableCell>
+                  <TableCell>Tarjeta</TableCell>
                   <TableCell align="right">Total</TableCell>
                   
                 </TableRow>
               </TableHead>
               <TableBody>
                 {movimientos.map((m) => (
-                  <TableRow key={m._id}>
-                    <TableCell component="th" scope="row">{m.dniUsuario}</TableCell>                                        
-                    <TableCell align="right">{m.numeroTarjeta}</TableCell>                   
-                    <TableCell align="right">{m.monto}</TableCell>                   
-                  </TableRow>
-                ))} 
+                    <TableRow key={m._id}>
+                      <TableCell component="th" scope="row">{dateFormat(m.fecha,"dd/mm/yyyy")}</TableCell>
+                      <TableCell>{m.numeroTarjeta}</TableCell>
+                      <TableCell align="right">{m.monto}</TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>

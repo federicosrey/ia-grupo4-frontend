@@ -85,7 +85,7 @@ function Row(props) {
                       <TableCell component="th" scope="row">{ut.descripcion}</TableCell>
                       <TableCell>{ut.numero}</TableCell>
                     </TableRow>
-                  ))}
+                  ))} 
                 </TableBody>               
               </Table>
                
@@ -123,9 +123,9 @@ const rows = [
 export default function TablaColapsable() {
   const [usuarios, setUsuarios] = useState([]);
 
-  useEffect(() =>{
-    getAllUsuarios();
-  })  
+  useEffect(() => {
+    getAllUsuarios();     
+  },[]); 
 
   const getAllUsuarios = async () =>{
     let response = await getUsuario();
@@ -148,8 +148,8 @@ export default function TablaColapsable() {
         </TableHead>
         <TableBody>
           {usuarios.map((u) => (
-            <Row key={u.name} row={u} />
-          ))}
+            <Row key={u._id} row={u} />
+          ))} 
           
         </TableBody>
         
