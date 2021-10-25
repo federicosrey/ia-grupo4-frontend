@@ -57,13 +57,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-
-  //const [value, setValue] = React.useState('persona');
-
-  /*const handleChange = (event) => {
-    setValue(event.target.value);
-  };*/
-
   const [email, setEmail] = React.useState(''); 
   const [password, setPassword] = React.useState('');
   const [usuarioValido, setUsuarioValido] = React.useState(false);

@@ -172,7 +172,7 @@ export default function Movimientos() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            G I P E Y | PERSONAS
+            G I P E Y | NEGOCIOS
           </Typography>
           
           <AlertDialog>
@@ -206,7 +206,7 @@ export default function Movimientos() {
               <TableHead>
                 <TableRow>                  
                   <TableCell>Fecha</TableCell>
-                  <TableCell>cuilcuit Cliente</TableCell>
+                  <TableCell>Cuil Cliente</TableCell>
                   <TableCell>Tarjeta</TableCell>
                   <TableCell align="right">Total</TableCell>
                   
