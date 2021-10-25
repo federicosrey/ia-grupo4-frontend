@@ -31,7 +31,7 @@ export const login = async function (login) {
                     let user = data.loginUser.user;
                     localStorage.setItem("nombre", user.name);
                     localStorage.setItem("email", user.email);
-                    localStorage.setItem("dni", user.dni);
+                    localStorage.setItem("cuilcuit", user.cuilcuit);
                     localStorage.setItem("apellido", user.lastname);
 
 
@@ -101,13 +101,13 @@ export const guardarContacto = async function (razonsocial, email, region, tama√
 }
 
 // Guardar usuario
-export const guardarUsuario = async function (name, lastname, email, dni, root, password) {
+export const guardarUsuario = async function (name, lastname, email, cuilcuit, root, password) {
     let url = urlWebServices.guardarUsuario;
     const formData = new URLSearchParams();
     formData.append('name', name);
     formData.append('lastname', lastname);
     formData.append('email', email);
-    formData.append('dni', dni);
+    formData.append('cuilcuit', cuilcuit);
     formData.append('root', root);
     formData.append('password', password);
 
@@ -206,12 +206,12 @@ export const deleteUsuario = async function (id_user) {
 }
 
 // Acutualizo usuarios
-export const updateUsuario = async function (id, dni, name, lastname, email, root, password) {
+export const updateUsuario = async function (id, cuilcuit, name, lastname, email, root, password) {
     let url = urlWebServices.updateUsuario;
     const formData = new URLSearchParams();
 
     formData.append('id', id);
-    formData.append('dni', dni);
+    formData.append('cuilcuit', cuilcuit);
     formData.append('name', name);
     formData.append('lastname', lastname);
     formData.append('email', email);
@@ -278,10 +278,10 @@ export const agregarTarjeta = async function (descripcion, limite) {
 }
 
 // Asignar Tarjeta
-export const asignarTarjeta = async function (dniusuario, tarjeta) {
+export const asignarTarjeta = async function (cuilUsuario, tarjeta) {
     let url = urlWebServices.asignarTarjeta;
     const formData = new URLSearchParams();
-    formData.append('dni', dniusuario);
+    formData.append('cuilcuit', cuilUsuario);
     formData.append('tarjeta', tarjeta);
     console.log("entro al control");
 
@@ -355,8 +355,8 @@ export const getTarjetas = async function () {
 export const agregarMovimiento = async function (usuario, negocio, tarjeta, monto) {
     let url = urlWebServices.agregarMovimiento;
     const formData = new URLSearchParams();
-    formData.append('dniusuario', usuario);
-    formData.append('dninegocio', negocio);
+    formData.append('cuilUsuario', usuario);
+    formData.append('cuitNegocio', negocio);
     formData.append('numerotarjeta', tarjeta);
     formData.append('monto', monto);
 
@@ -422,11 +422,11 @@ export const getMovimientos = async function () {
 }
 
 // Recupero movimientos de negocios
-export const getNMovimientos = async function (dninegocio) {
+export const getNMovimientos = async function (cuitNegocio) {
     
         let url = urlWebServices.getNMovimientos;
         const formData = new URLSearchParams();
-        formData.append('dniNegocio', dninegocio);
+        formData.append('cuitNegocio', cuitNegocio);
         try {
             let response = await fetch(url, {
                 method: 'POST', // or 'PUT'
@@ -457,10 +457,10 @@ export const getNMovimientos = async function (dninegocio) {
         };
     }
 
-export const getLiquidaciones = async function (dniusuario) {
+export const getLiquidaciones = async function (cuilUsuario) {
     let url = urlWebServices.getLiquidaciones;
     const formData = new URLSearchParams();
-    formData.append('dniUsuario', dniusuario);
+    formData.append('cuilUsuario', cuilUsuario);
     
     try {
         let response = await fetch(url, {
@@ -494,10 +494,10 @@ export const getLiquidaciones = async function (dniusuario) {
     };
 }
 
-export const getInfoUsuario = async function (dniusuario) {
+export const getInfoUsuario = async function (cuilUsuario) {
     let url = urlWebServices.getInfoUsuario;
     const formData = new URLSearchParams();
-    formData.append('dniUsuario', dniusuario);
+    formData.append('cuilUsuario', cuilUsuario);
     
     try {
         let response = await fetch(url, {
@@ -530,10 +530,10 @@ export const getInfoUsuario = async function (dniusuario) {
         console.log("error", error);
     };
 }
-export const getUMovimientos = async function (dniusuario) {
+export const getUMovimientos = async function (cuilUsuario) {
     let url = urlWebServices.getUMovimientos;
     const formData = new URLSearchParams();
-    formData.append('dniUsuario', dniusuario);
+    formData.append('cuilUsuario', cuilUsuario);
     try {
         let response = await fetch(url, {
             method: 'POST', // or 'PUT'
@@ -567,7 +567,7 @@ export const getUMovimientos = async function (dniusuario) {
 export const postLiquidaciones = async function (movimientos) {
     let url = urlWebServices.postLiquidaciones;
     const formData = new URLSearchParams();
-    formData.append('dniUsuario', movimientos._id.dniUsuario);
+    formData.append('cuilUsuario', movimientos._id.cuilUsuario);
     formData.append('numerotarjeta', movimientos._id.numeroTarjeta);
     formData.append('total', movimientos.total);
                 
@@ -609,9 +609,9 @@ export const postLiquidaciones = async function (movimientos) {
 export const postPagos = async function (movimientos) {
     let url = urlWebServices.postPagos;
     const formData = new URLSearchParams();
-    formData.append('dninegocio', movimientos._id.dniNegocio);
+    formData.append('cuitNegocio', movimientos._id.cuitNegocio);
     formData.append('total', movimientos.total);
-    console.log(movimientos._id.dniNegocio);
+    console.log(movimientos._id.cuitNegocio);
     console.log(movimientos.total);
 
                 try {
@@ -648,7 +648,7 @@ export const postPagos = async function (movimientos) {
 export const postCobros = async function (liquidacion) {
     let url = urlWebServices.postCobros;
     const formData = new URLSearchParams();
-    formData.append('dniUsuario', liquidacion.dniUsuario);
+    formData.append('cuilUsuario', liquidacion.cuilUsuario);
     formData.append('total', liquidacion.total);
     
 

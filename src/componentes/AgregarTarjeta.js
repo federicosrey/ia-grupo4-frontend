@@ -156,7 +156,7 @@ export default function AgregarUsuario() {
     let archivoUsuarios = false;
     console.log("subir usuario");
 
-   // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
+   // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
       archivoUsuarios = await agregarTarjeta (descripcion, limite)
     //}
     //else {

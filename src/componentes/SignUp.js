@@ -64,7 +64,7 @@ export default function SignUp() {
   //const [open, setOpen] = React.useState(true);
   const [nombre, setNombre] = React.useState('');
   const [lastname, setLastname] = React.useState('');
-  const [dni, setDni] = React.useState('')
+  const [cuilcuit, setcuilcuit] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('');
   const [root, setRoot] = React.useState('')
@@ -79,8 +79,8 @@ export default function SignUp() {
   const handleNombre = (event) => {
     setNombre(event.target.value);
   }
-  const handleDni = (event) => {
-    setDni(event.target.value);
+  const handlecuilcuit = (event) => {
+    setcuilcuit(event.target.value);
   }
   const handleLastname= (event) => {
     setLastname(event.target.value);
@@ -113,8 +113,8 @@ const isEmpty = (stringToValidate) => {
       return true;
     };
 
-    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty (root) && !isEmpty(password)) {
-      archivoUsuarios = await guardarUsuario (nombre,lastname,email,dni,root,password)
+    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty (root) && !isEmpty(password)) {
+      archivoUsuarios = await guardarUsuario (nombre,lastname,email,cuilcuit,root,password)
       alert("Usuario creado correctamente.")
           }
     else {
@@ -202,12 +202,12 @@ const isEmpty = (stringToValidate) => {
                 variant="outlined"
                 required
                 fullWidth
-                id="dni"
-                label="Dni"
-                name="dni"
-                autoComplete="dni"
+                id="cuilcuit"
+                label="cuilcuit"
+                name="cuilcuit"
+                autoComplete="cuilcuit"
                 inputProps={{
-                  onChange: (event) => handleDni(event),
+                  onChange: (event) => handlecuilcuit(event),
                 }}
               />
             </Grid>

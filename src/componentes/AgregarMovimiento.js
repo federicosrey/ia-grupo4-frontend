@@ -151,7 +151,7 @@ export default function AgregarUsuario() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   
-  const [dni, setDni] = React.useState('')
+  const [cuilcuit, setcuilcuit] = React.useState('')
   const [tarjeta, setTarjeta] = React.useState('')
   const [monto, setMonto] = React.useState('');
  const history = useHistory()
@@ -160,8 +160,8 @@ export default function AgregarUsuario() {
     setTarjeta(event.target.value);
   }
   
-  const handleDni = (event) => {
-    setDni(event.target.value);
+  const handlecuilcuit = (event) => {
+    setcuilcuit(event.target.value);
   }
   
   const handleMonto= (event) => {
@@ -177,11 +177,11 @@ export default function AgregarUsuario() {
 
   const agregarMov = async function () {
     let archivoMovimiento = false;
-    let dnineg = localStorage.getItem("dni");
+    let cuilcuitneg = localStorage.getItem("cuilcuit");
     
 
-    //if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-      archivoMovimiento = await agregarMovimiento (dni, dnineg, tarjeta, monto);
+    //if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
+      archivoMovimiento = await agregarMovimiento (cuilcuit, cuilcuitneg, tarjeta, monto);
     //}
    //else {
     //  alert("Completar todos los datos.")
@@ -260,12 +260,12 @@ export default function AgregarUsuario() {
                 variant="outlined"
                 required
                 fullWidth
-                id="dni"
-                label="DNI"
-                name="DNI"
-                autoComplete="DNI"
+                id="cuilcuit"
+                label="cuilcuit"
+                name="cuilcuit"
+                autoComplete="cuilcuit"
                 inputProps={{
-                  onChange: (event) => handleDni(event),
+                  onChange: (event) => handlecuilcuit(event),
                 }}
               />
             </Grid>

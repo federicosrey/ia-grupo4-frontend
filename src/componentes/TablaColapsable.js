@@ -62,7 +62,7 @@ function Row(props) {
         <TableCell component="th" scope="row">{row.name}</TableCell>
         <TableCell align="right">{row.lastname}</TableCell>
         <TableCell align="right">{row.email}</TableCell>
-        <TableCell align="right">{row.dni}</TableCell>
+        <TableCell align="right">{row.cuilcuit}</TableCell>
         <TableCell align="right">{row.root}</TableCell>
       </TableRow>
       <TableRow>
@@ -142,7 +142,7 @@ export default function TablaColapsable() {
             <TableCell>Nombre</TableCell>
             <TableCell align="right">Apellido</TableCell>
             <TableCell align="right">e-Mail</TableCell>
-            <TableCell align="right">DNI</TableCell>
+            <TableCell align="right">cuilcuit</TableCell>
             <TableCell align="right">Tipo Usuario</TableCell>
           </TableRow>
         </TableHead>

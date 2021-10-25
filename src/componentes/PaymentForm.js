@@ -27,8 +27,8 @@ export default function PaymentForm() {
         <Grid item xs={12} md={6}>
           <TextField
             required
-            id="dni"
-            label="DNI"
+            id="cuilcuit"
+            label="cuilcuit"
             fullWidth
             autoComplete="cc-number"
           />

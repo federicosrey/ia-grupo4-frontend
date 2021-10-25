@@ -142,7 +142,7 @@ export default function AsignarTarjeta() {
   const asignar = async function () {
     
     console.log(" front ", usuarioSeleccionado, tarjetaSeleccionada);
-    // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
+    // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
     var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada);
     //}
     //else {
@@ -262,7 +262,7 @@ export default function AsignarTarjeta() {
                 >
 
                 {usuarios.map((u) => (
-                    <MenuItem value={u._id}>{u.dni}{" - "}{u.name}</MenuItem>
+                    <MenuItem value={u._id}>{u.cuilcuit}{" - "}{u.name}</MenuItem>
                   ))}
 
                   

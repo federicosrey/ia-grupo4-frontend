@@ -254,10 +254,10 @@ export default function Productos() {
                 variant="outlined"
                 disabled
                 fullWidth
-                id="dni"
-                label={localStorage.getItem("dni")}
-                name="dni"
-                autoComplete="dni"
+                id="cuilcuit"
+                label={localStorage.getItem("cuilcuit")}
+                name="cuilcuit"
+                autoComplete="cuilcuit"
               />
             </Grid>
           </Grid>

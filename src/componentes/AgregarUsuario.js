@@ -139,7 +139,7 @@ export default function AgregarUsuario() {
   const [open, setOpen] = React.useState(true);
   const [nombre, setNombre] = React.useState('');
   const [lastname, setLastname] = React.useState('');
-  const [dni, setDni] = React.useState('')
+  const [cuilcuit, setcuilcuit] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('');
   const [root, setRoot] = React.useState('')
@@ -154,8 +154,8 @@ export default function AgregarUsuario() {
   const handleNombre = (event) => {
     setNombre(event.target.value);
   }
-  const handleDni = (event) => {
-    setDni(event.target.value);
+  const handlecuilcuit = (event) => {
+    setcuilcuit(event.target.value);
   }
   const handleLastname= (event) => {
     setLastname(event.target.value);
@@ -188,8 +188,8 @@ export default function AgregarUsuario() {
       return true;
     };
 
-    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(dni) && !isEmpty(password)) {
-      archivoUsuarios = await guardarUsuario (nombre,lastname,email,dni,root,password)
+    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
+      archivoUsuarios = await guardarUsuario (nombre,lastname,email,cuilcuit,root,password)
     }
     else {
       alert("Completar todos los datos.")
@@ -205,7 +205,7 @@ export default function AgregarUsuario() {
 
 
   const addUsuario = (usuario, resolve) => {
-    const newUsuario = { name: usuario.name, lastname: usuario.lastname, dni: usuario.dni, email: usuario.email, password: usuario.password };
+    const newUsuario = { name: usuario.name, lastname: usuario.lastname, cuilcuit: usuario.cuilcuit, email: usuario.email, password: usuario.password };
     subirUsuario(newUsuario)
     resolve()
   };
@@ -320,12 +320,12 @@ export default function AgregarUsuario() {
                 variant="outlined"
                 required
                 fullWidth
-                id="dni"
-                label="Dni"
-                name="dni"
-                autoComplete="dni"
+                id="cuilcuit"
+                label="cuilcuit"
+                name="cuilcuit"
+                autoComplete="cuilcuit"
                 inputProps={{
-                  onChange: (event) => handleDni(event),
+                  onChange: (event) => handlecuilcuit(event),
                 }}
               />
             </Grid>

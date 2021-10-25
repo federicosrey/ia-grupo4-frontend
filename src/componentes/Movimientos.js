@@ -143,7 +143,7 @@ export default function Movimientos() {
   },[]);
 
   const getAllMovimientos = async () => {
-    let response  = await getUMovimientos(localStorage.getItem("dni"));
+    let response  = await getUMovimientos(localStorage.getItem("cuilcuit"));
     console.log(response);
     setMovimientos(response);
   }

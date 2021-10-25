@@ -143,7 +143,7 @@ export default function Movimientos() {
   },[]);
 
   const getAllMovimientos = async () => {
-    let response  = await getNMovimientos(localStorage.getItem("dni"));
+    let response  = await getNMovimientos(localStorage.getItem("cuilcuit"));
     console.log(response);
     setMovimientos(response);
   }
@@ -206,7 +206,7 @@ export default function Movimientos() {
               <TableHead>
                 <TableRow>                  
                   <TableCell>Fecha</TableCell>
-                  <TableCell>DNI Cliente</TableCell>
+                  <TableCell>cuilcuit Cliente</TableCell>
                   <TableCell>Tarjeta</TableCell>
                   <TableCell align="right">Total</TableCell>
                   
@@ -216,7 +216,7 @@ export default function Movimientos() {
                 {movimientos.map((m) => (
                     <TableRow key={m._id}>
                       <TableCell component="th" scope="row">{dateFormat(m.fecha,"dd/mm/yyyy")}</TableCell>
-                      <TableCell>{m.dniUsuario}</TableCell>
+                      <TableCell>{m.cuilUsuario}</TableCell>
                       <TableCell>{m.numeroTarjeta}</TableCell>
                       <TableCell align="right">{m.monto}</TableCell>
                     </TableRow>

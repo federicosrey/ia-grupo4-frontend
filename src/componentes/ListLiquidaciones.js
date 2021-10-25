@@ -133,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ListLiquidaciones() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [dni, setDni] = React.useState('')
+  const [cuilcuit, setcuilcuit] = React.useState('')
   const [movimientos, setMovimientos] = React.useState([]);
 
   const handleDrawerOpen = () => {
@@ -143,8 +143,8 @@ export default function ListLiquidaciones() {
     setOpen(false);
   };
 
-  const handleDni = (event) => {
-    setDni(event.target.value);
+  const handlecuilcuit = (event) => {
+    setcuilcuit(event.target.value);
   }
 
   
@@ -250,7 +250,7 @@ export default function ListLiquidaciones() {
                   <TableBody>
                     {movimientos.map((m) => (
                       <TableRow key={m._id.numeroTarjeta}>
-                        <TableCell component="th" scope="row">{m._id.dniUsuario}</TableCell>
+                        <TableCell component="th" scope="row">{m._id.cuilUsuario}</TableCell>
                         <TableCell align="right">{m._id.numeroTarjeta}</TableCell>                        
                         <TableCell align="right">{m.total}</TableCell>
                       </TableRow>

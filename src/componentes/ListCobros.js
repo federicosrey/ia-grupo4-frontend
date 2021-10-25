@@ -133,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ListCobros() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [dni, setDni] = React.useState('')
+  const [cuilcuit, setcuilcuit] = React.useState('')
   const [tarjetas, setTarjetas] = React.useState([]);
 
   const handleDrawerOpen = () => {
@@ -143,12 +143,12 @@ export default function ListCobros() {
     setOpen(false);
   };
 
-  const handleDni = (event) => {
-    setDni(event.target.value);
+  const handlecuilcuit = (event) => {
+    setcuilcuit(event.target.value);
   }
   
   const getAllLiquidaciones = async () => {
-    let response  = await getLiquidaciones(dni);
+    let response  = await getLiquidaciones(cuilcuit);
     setTarjetas(response.docs);
   }
 
@@ -220,12 +220,12 @@ export default function ListCobros() {
                 variant="outlined"
                 required
                 fullWidth
-                id="dni"
-                label="DNI"
-                name="dni"
-                autoComplete="dni"
+                id="cuilcuit"
+                label="cuilcuit"
+                name="cuilcuit"
+                autoComplete="cuilcuit"
                 inputProps={{
-                  onChange: (event) => handleDni(event),
+                  onChange: (event) => handlecuilcuit(event),
                 }}
               />
             
