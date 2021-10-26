@@ -156,8 +156,7 @@ export default function AsignarTarjeta() {
 
   const redirect = async () => {
     const ok = await asignar()
-    console.log("aca")
-    alert("aca")
+    
     if (ok) {
       //setOpen(false);
       //history.push("/lusuario")
@@ -275,7 +274,7 @@ export default function AsignarTarjeta() {
             <Grid item xs={12}>
             <FormControl className={classes.formControl}>
                 <Select
-                  value={tarjetaSeleccionada}
+                  value={tarjetas.descripcion}
                   onChange={handleChangeTarjeta}
                   displayEmpty
                   className={classes.selectEmpty}
