@@ -244,11 +244,12 @@ export const updateUsuario = async function (id, cuilcuit, name, lastname, email
 }
 
 // Agregar Tarjeta
-export const agregarTarjeta = async function (descripcion, limite) {
+export const agregarTarjeta = async function (descripcion, limite, prefijo) {
     let url = urlWebServices.agregarTarjeta;
     const formData = new URLSearchParams();
     formData.append('descripcion', descripcion);
     formData.append('limite', limite);
+    formData.append('prefijo', prefijo);
 
     try {
         let response = await fetch(url, {
@@ -278,12 +279,14 @@ export const agregarTarjeta = async function (descripcion, limite) {
 }
 
 // Asignar Tarjeta
-export const asignarTarjeta = async function (cuilUsuario, tarjeta) {
+export const asignarTarjeta = async function (cuilUsuario, tarjeta, codigoSeguridad, fechaCierre, fechaVencimiento) {
     let url = urlWebServices.asignarTarjeta;
     const formData = new URLSearchParams();
     formData.append('cuilcuit', cuilUsuario);
     formData.append('tarjeta', tarjeta);
-    console.log("entro al control");
+    formData.append('codigoseguridad', codigoSeguridad);
+    formData.append('fechacierre', fechaCierre);
+    formData.append('fechavencimiento', fechaVencimiento);
 
     //try {
         console.log("respue ");

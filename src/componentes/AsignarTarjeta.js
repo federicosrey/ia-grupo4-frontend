@@ -24,6 +24,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 
 const drawerWidth = 240;
 
@@ -138,12 +139,15 @@ export default function AsignarTarjeta() {
   const [usuarios, setUsuarios] = useState([]);
   const [tarjetaSeleccionada, setTarjetaSeleccionada] = React.useState('');
   const [tarjetas, setTarjetas] = useState([]);
+  const [codigoSeguridad, setCodigoSeguridad] = React.useState('');
+  const [fechaCierre, setFechaCierre] = React.useState('');
+  const [fechaVencimiento, setFechaVencimiento] = React.useState('');
 
   const asignar = async function () {
     
-    console.log(" front ", usuarioSeleccionado, tarjetaSeleccionada);
+   
     // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
-    var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada);
+    var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada, codigoSeguridad, fechaCierre, fechaVencimiento);
     //}
     //else {
     //  alert("Completar todos los datos.")
@@ -169,6 +173,18 @@ export default function AsignarTarjeta() {
 
   const handleChangeTarjeta = (event) => {
     setTarjetaSeleccionada(event.target.value);    
+  };
+
+  const handleCodigoSeguridad = (event) => {
+    setCodigoSeguridad(event.target.value);    
+  };
+
+  const handleFechaCierre = (event) => {
+    setFechaCierre(event.target.value);    
+  };
+
+  const handleFechaVencimiento = (event) => {
+    setFechaVencimiento(event.target.value);    
   };
 
   useEffect(() => {
@@ -289,6 +305,43 @@ export default function AsignarTarjeta() {
                 </Select>
                 <FormHelperText>Tarjeta</FormHelperText>
             </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+              margin="dense"
+              id="codigoSeguridad"
+              label="Codigo Seguridad"
+              type="number"
+              fullWidth
+              onChange = {handleCodigoSeguridad}
+              />
+            </Grid>
+
+            
+
+            <Grid item xs={12}>
+              <TextField
+              InputLabelProps={{ shrink: true }}
+              margin="dense"
+              id="fechaCierre"
+              label="Fecha Cierre"
+              type="date"
+              fullWidth
+              onChange = {handleFechaCierre}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+              InputLabelProps={{ shrink: true }}
+              margin="dense"
+              id="fechaVencimiento"
+              label="Fecha Vencimiento"
+              type="date"
+              fullWidth
+              onChange = {handleFechaVencimiento}
+              />
             </Grid>
             
             

@@ -142,7 +142,7 @@ export default function AgregarUsuario() {
 
  const [descripcion, setDescripcion] = React.useState('')
  const [limite, setLimite] = React.useState('');
-
+ const [prefijo, setPrefijo] = React.useState('');
   
 
   const handleDescripcion = (event) => {
@@ -152,12 +152,16 @@ export default function AgregarUsuario() {
     setLimite(event.target.value);
   }
 
+  const handlePrefijo = (event) => {
+    setPrefijo(event.target.value);
+  }
+
   const subirUsuario = async function () {
     let archivoUsuarios = false;
     console.log("subir usuario");
 
    // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
-      archivoUsuarios = await agregarTarjeta (descripcion, limite)
+      archivoUsuarios = await agregarTarjeta (descripcion, limite, prefijo)
     //}
     //else {
     //  alert("Completar todos los datos.")
@@ -256,9 +260,18 @@ export default function AgregarUsuario() {
             type="number"
             fullWidth
             onChange = {handleLimite}
-          />
+            />
             </Grid>
-            
+            <Grid item xs={12}>
+            <TextField
+            margin="dense"
+            id="prefijo"
+            label="Prefijo"
+            type="number"
+            fullWidth
+            onChange = {handlePrefijo}
+            />
+            </Grid>
             
             <Linkear  style={{textDecoration:'none'}} to = '/ltarjetas'>
             <Grid container spacing={2}>
