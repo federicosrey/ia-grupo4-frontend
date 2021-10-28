@@ -35,6 +35,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { getMovimientos, postLiquidaciones, UpdateidLiquidacionMovimiento } from '../controller/miApp.controller';
+import { postLiquidacionesExterno } from '../controller/externoApp.controller';
 
 /*function Copyright() {
   return (
@@ -157,18 +158,34 @@ export default function ListLiquidaciones() {
   const generarLiquidacion = async () => {
     for (var i = 0; i < movimientos.length; i++){
       let respons  = await postLiquidaciones(movimientos[i]);
-      console.log(movimientos[i].mov);
+      
+     
       for(var x = 0; x < movimientos[i].mov.length; x++){
         let res  = await UpdateidLiquidacionMovimiento(movimientos[i].mov[x],respons);
         
       }
     }
     
+    
       alert("Liquidaciones generadas exitosamente");
     
     
   }
-  
+  const generarLiquidacionYEnviar = async () => {
+    for (var i = 0; i < movimientos.length; i++){
+      let respons  = await postLiquidaciones(movimientos[i]);
+      let bancoRespons = await postLiquidacionesExterno(movimientos[i], respons);
+      console.log("respuesta del banco", bancoRespons);
+      for(var x = 0; x < movimientos[i].mov.length; x++){
+        let res  = await UpdateidLiquidacionMovimiento(movimientos[i].mov[x],respons);
+        
+      }
+    }
+     
+    alert("Liquidaciones generadas y enviadas exitosamente");
+    
+    
+  }
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   
@@ -271,6 +288,19 @@ export default function ListLiquidaciones() {
               >
                 
                 Liquidar
+              </Button>
+            
+            </Grid>
+            <Grid item xs={3}>
+            
+              <Button
+                fullWidth
+                variant="contained"
+                color="black"
+                onClick={() => {generarLiquidacionYEnviar()}}
+              >
+                
+                Liquidar y Enviar
               </Button>
             
             </Grid>
