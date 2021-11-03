@@ -355,12 +355,13 @@ export const getTarjetas = async function () {
 }
 
 // Agregar movimiento
-export const agregarMovimiento = async function (usuario, negocio, tarjeta, monto) {
+export const agregarMovimiento = async function (usuario, negocio, tarjeta,codigoseguridad, monto) {
     let url = urlWebServices.agregarMovimiento;
     const formData = new URLSearchParams();
-    formData.append('cuilUsuario', usuario);
+    formData.append('dnicuilUsuario', usuario);
     formData.append('cuitNegocio', negocio);
     formData.append('numerotarjeta', tarjeta);
+    formData.append('codigoseguridad', codigoseguridad);
     formData.append('monto', monto);
 
     try {
@@ -376,13 +377,17 @@ export const agregarMovimiento = async function (usuario, negocio, tarjeta, mont
             body: formData
         });
 
-        if (response.status === 201) {
-            console.log("agrego bien el movimiento");
-            return true;
-        }
-        else {
-            return false;
-        }
+
+        
+        //if (response.status === 201) {
+            let data = await response.json();
+            console.log(data)
+            return data;
+            
+        //}
+       /*  else {
+            return "no es 201";
+        } */
     }
     catch (error) {
         console.log("error", error);

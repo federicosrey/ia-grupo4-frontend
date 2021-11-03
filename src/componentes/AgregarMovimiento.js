@@ -22,6 +22,10 @@ import { Button } from '@material-ui/core';
 import {Link as Linkear} from 'react-router-dom';
 import { useHistory } from 'react-router';
 
+import swal from "sweetalert";
+
+
+
 //importo controller
 
 import { agregarMovimiento } from "../controller/miApp.controller"
@@ -133,7 +137,8 @@ export default function AgregarUsuario() {
   const [cuilcuit, setcuilcuit] = React.useState('')
   const [tarjeta, setTarjeta] = React.useState('')
   const [monto, setMonto] = React.useState('');
- const history = useHistory()
+  const [codSeguridad, setCodSeguridad] = React.useState('');
+  const history = useHistory();
 
   const handleTarjeta = (event) => {
     setTarjeta(event.target.value);
@@ -147,6 +152,10 @@ export default function AgregarUsuario() {
     setMonto(event.target.value);
   }
 
+  const handleCodSeguridad= (event) => {
+    setCodSeguridad(event.target.value);
+  }
+
   const isEmpty = (stringToValidate) => {
     if (stringToValidate !== undefined && stringToValidate !== null) {
       return stringToValidate.length === 0
@@ -158,20 +167,32 @@ export default function AgregarUsuario() {
     let archivoMovimiento = false;
     let cuilcuitneg = localStorage.getItem("cuilcuit");
     
-
-    if (!isEmpty(cuilcuit) && !isEmpty(tarjeta) && !isEmpty(monto)) {
-      archivoMovimiento = await agregarMovimiento (cuilcuit, cuilcuitneg, tarjeta, monto);
-    }
-   else {
-    alert("Completar todos los datos.")
-    }
-    return archivoMovimiento;
+    archivoMovimiento = await agregarMovimiento (cuilcuit, cuilcuitneg, tarjeta, codSeguridad, monto);
+    console.log(archivoMovimiento);
+    if(archivoMovimiento.status === 201){
+      swal("TRANSACCION OK", archivoMovimiento.message + "\nTicket: "+archivoMovimiento.data, "success");
+      setTimeout(() => {
+        history.push({
+          pathname: "/nmovimientos",
+        });
+      }, 1300);
+    }else{
+      swal("TRANSACCION RECHAZADA", archivoMovimiento.message, "warning");
+      setTimeout(() => {
+        // history.push({
+        //   pathname: "/cobrar",
+        // });
+      }, 1300);
+    }  
   }
 
-  const redirect = async () => {
-    const ok = await agregarMov()
-    
-  }
+  const cobrar = () => {
+    if (!isEmpty(cuilcuit) && !isEmpty(tarjeta) && !isEmpty(monto) && !isEmpty(monto)) {
+      agregarMov();
+    } else {
+      swal(" ", "COMPLETAR TODOS LOS DATOS", "warning");
+    }
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -240,7 +261,7 @@ export default function AgregarUsuario() {
                 required
                 fullWidth
                 id="cuilcuit"
-                label="cuilcuit"
+                label="DNI/CUIL/CUT"
                 name="cuilcuit"
                 autoComplete="cuilcuit"
                 inputProps={{
@@ -255,11 +276,27 @@ export default function AgregarUsuario() {
                 required
                 fullWidth
                 id="numeroTarjeta"
-                label="Número Tarjeta"
+                label="NUMERO TARJETA"
                 name="NumeroTarjeta"
                 autoComplete=""
                 inputProps={{
                   onChange: (event) => handleTarjeta(event),
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="codseguridad"
+                label="CODIGO SEGURIDAD"
+                type="Number"
+                id="codseguridad"
+                
+                inputProps={{
+                  onChange: (event) => handleCodSeguridad(event),
                 }}
               />
             </Grid>
@@ -270,7 +307,7 @@ export default function AgregarUsuario() {
                 required
                 fullWidth
                 name="monto"
-                label="Monto"
+                label="MONTO"
                 type="Number"
                 id="monto"
                 
@@ -280,35 +317,31 @@ export default function AgregarUsuario() {
               />
             </Grid>
             
-            <Linkear  style={{textDecoration:'none'}} to = '/nmovimientos'>
+            
             <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() => {redirect()}}
-              >
-                
+              <Grid item xs={12} sm={6}>
+              
+               <Button fullWidth variant="contained" color="primary" onClick={cobrar}>
                 Cobrar
               </Button>
+              
               </Grid>
-            <Grid item xs={12} sm={6}>  
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                
-                Cancelar
-              </Button>
+
+              
+              
+              
+              <Grid item xs={12} sm={6}> 
+                <Linkear  style={{textDecoration:'none'}} to = '/ndash'> 
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                  >
+                    Cancelar
+                  </Button>
+                </Linkear>
               </Grid>
-              </Grid>
-          </Linkear>
+            </Grid>
           
           </Grid>
           

@@ -268,7 +268,7 @@ export default function AgregarCobro() {
                 id="cuilcuit"
                 label="cuilcuit"
                 name="cuilcuit"
-                autoComplete="cuilcuit"
+                autoComplete=""
                 inputProps={{
                   onChange: (event) => handlecuilcuit(event),
                 }}
