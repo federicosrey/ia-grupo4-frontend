@@ -152,6 +152,7 @@ export default function ListLiquidaciones() {
 
   const getAllMovimientos = async () => {
     let response  = await getMovimientos();
+    console.log("respon", response);
     setMovimientos(response);
   }
 
@@ -266,9 +267,9 @@ export default function ListLiquidaciones() {
                   </TableHead>
                   <TableBody>
                     {movimientos.map((m) => (
-                      <TableRow key={m._id.numeroTarjeta}>
-                        <TableCell component="th" scope="row">{m._id.cuilUsuario}</TableCell>
-                        <TableCell align="right">{m._id.numeroTarjeta}</TableCell>                        
+                      <TableRow key={m.numeroTarjeta}>
+                        <TableCell component="th" scope="row">{m.cuilUsuario}</TableCell>
+                        <TableCell align="right">{m.numeroTarjeta}</TableCell>                        
                         <TableCell align="right">{m.total}</TableCell>
                       </TableRow>
                     ))}

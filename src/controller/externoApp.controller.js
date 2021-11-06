@@ -12,10 +12,10 @@ export const postLiquidacionesExterno = async function (movimientos, idLiquidaci
   "pagado": "string",
   "cuitEmpresa": "string",
   "descripcion": "string" */
-    formData.append('cuit', movimientos._id.cuilUsuario.toString());
+    formData.append('cuit', movimientos.cuilUsuario.toString());
     formData.append('codigotransaccion', idLiquidacion.toString());
     formData.append('importe', movimientos.total);
-    formData.append('fechaVencimiento', dateFormat(Date.now(),"dd/mm/yyyy").toString());  
+    formData.append('fechaVencimiento', dateFormat(movimientos.fechaVencimiento,"dd/mm/yyyy").toString());  
     formData.append('pagado', "0");          
     formData.append('cuitEmpresa', "20378353622");
     formData.append('descripcion', "Resumen GIPEY".concat(' ',dateFormat(Date.now(),"dd/mm/yyyy").toString()));

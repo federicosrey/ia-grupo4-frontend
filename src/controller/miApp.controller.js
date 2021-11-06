@@ -575,8 +575,8 @@ export const getUMovimientos = async function (cuilUsuario) {
 export const postLiquidaciones = async function (movimientos) {
     let url = urlWebServices.postLiquidaciones;
     const formData = new URLSearchParams();
-    formData.append('cuilUsuario', movimientos._id.cuilUsuario);
-    formData.append('numerotarjeta', movimientos._id.numeroTarjeta);
+    formData.append('cuilUsuario', movimientos.cuilUsuario);
+    formData.append('numerotarjeta', movimientos.numeroTarjeta);
     formData.append('total', movimientos.total);
                 
 

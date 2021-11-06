@@ -25,6 +25,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import dateFormat from "dateformat";
 
 const drawerWidth = 240;
 
@@ -147,7 +148,7 @@ export default function AsignarTarjeta() {
     
    
     // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
-    var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada, codigoSeguridad, fechaCierre, fechaVencimiento);
+    var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada, codigoSeguridad, dateFormat(fechaCierre,'yyyy-mm-dd').toString(),dateFormat(fechaVencimiento,'yyyy-mm-dd').toString());
     //}
     //else {
     //  alert("Completar todos los datos.")
