@@ -34,7 +34,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getNMovimientos, postPagos, UpdateidPagoMovimiento} from '../controller/miApp.controller';
+import { postPagos, UpdateidPagoMovimiento, getMontosaPagaraEstablecimientos} from '../controller/miApp.controller';
+import { postPagosExterno } from '../controller/externoApp.controller';
 
 /*function Copyright() {
   return (
@@ -143,14 +144,8 @@ export default function ListLiquidaciones() {
     setOpen(false);
   };
 
-  const handlecuilcuit = (event) => {
-    setcuilcuit(event.target.value);
-  }
-
-  
-
   const getAllMovimientos = async () => {
-    let response  = await getNMovimientos();
+    let response  = await getMontosaPagaraEstablecimientos();
     setMovimientos(response);
   }
 
@@ -164,6 +159,22 @@ export default function ListLiquidaciones() {
     }
     
       alert("Pagos generados exitosamente");
+    
+    
+  }
+
+  const generarPagoYEnviar = async () => {
+    for (var i = 0; i < movimientos.length; i++){
+      let respons  = await postPagos(movimientos[i]);
+      let bancoRespons = await postPagosExterno(movimientos[i], respons);
+      console.log("respuesta del banco", bancoRespons);
+      for(var x = 0; x < movimientos[i].mov.length; x++){
+        let res  = await UpdateidPagoMovimiento(movimientos[i].mov[x],respons);
+        
+      }
+    }
+     
+    alert("Pagos generados y enviados exitosamente");
     
     
   }
@@ -247,8 +258,8 @@ export default function ListLiquidaciones() {
                   </TableHead>
                   <TableBody>
                     {movimientos.map((m) => (
-                      <TableRow key={m._id}>
-                        <TableCell component="th" scope="row">{m._id.cuitNegocio}</TableCell>                    
+                      <TableRow key={m.cuitNegocio}>
+                        <TableCell component="th" scope="row">{m.cuitNegocio}</TableCell>                    
                         <TableCell align="right">{m.total}</TableCell>
                       </TableRow>
                     ))}
@@ -268,6 +279,20 @@ export default function ListLiquidaciones() {
               >
                 
                 PAGAR
+              </Button>
+              
+            
+            </Grid>
+            <Grid item xs={3}>
+            
+              <Button
+                fullWidth
+                variant="contained"
+                color="black"
+                onClick={() => {generarPagoYEnviar()}}
+              >
+                
+                Pagar y Enviar
               </Button>
             
             </Grid>

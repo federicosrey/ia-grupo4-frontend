@@ -5,7 +5,7 @@ const urlWebServicesExterno = {
 
     //Login (Super usuario y administrador de encuestas)
     altatarjetaM: urlExtApi + "api/users/altatarjeta",
-    altacomercioM: urlExtApi + "api/users/altacomercioM",
+    altacomercioM: urlExtApi + "api/users/altacomercio",
     getTarjetaCodigo: urlExtApi + "api/users/getTarjetaCodigo",
     getComercioCodigo: urlExtApi + "api/users/getComercioCodigo",
     

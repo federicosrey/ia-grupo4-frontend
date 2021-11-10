@@ -38,8 +38,9 @@ const urlWebServices = {
 
     //Pagos
     postPagos: urlApi + "api/users/agregarPago",
+    getMontosaPagaraEstablecimientos: urlApi + "api/users/getMontosaPagaraEstablecimientos",
 
-    //Pagos
+    //Cobros
     postCobros: urlApi + "api/users/agregarCobro",
 
     //Encuestas

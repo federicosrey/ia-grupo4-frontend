@@ -617,10 +617,9 @@ export const postLiquidaciones = async function (movimientos) {
 export const postPagos = async function (movimientos) {
     let url = urlWebServices.postPagos;
     const formData = new URLSearchParams();
-    formData.append('cuitNegocio', movimientos._id.cuitNegocio);
+    formData.append('cuitNegocio', movimientos.cuitNegocio);
     formData.append('total', movimientos.total);
-    console.log(movimientos._id.cuitNegocio);
-    console.log(movimientos.total);
+   
 
                 try {
                     let response = await fetch(url, {
@@ -791,6 +790,39 @@ export const UpdateidCobroLiquidacion = async function (idLiquidacion, idCobro) 
                     return false;
                 };
     
+}
+
+export const getMontosaPagaraEstablecimientos = async function () {
+    let url = urlWebServices.getMontosaPagaraEstablecimientos;
+
+    try {
+        let response = await fetch(url, {
+            method: 'GET', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        });
+
+        if (response.status === 200) {
+            let data = await response.json();
+            
+            let listarmovim = data.data;
+            return listarmovim;
+        }
+        else {
+            let vacio = [];
+            console.log("No hay usuarios")
+            return (vacio);
+
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+    };
 }
 
 //Crear encuestas
