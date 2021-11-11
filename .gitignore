@@ -4,14 +4,15 @@
 /node_modules
 /.pnp
 .pnp.js
-/src/controller/webServices.js
-/src/controller/constants.js
+
 
 # testing
 /coverage
 
 # production
 /build
+/src/controller/webServices.js
+/src/controller/constants.js
 
 # misc
 .DS_Store
