@@ -1,5 +1,5 @@
-const urlApi = "http://localhost:4000/";
-//const urlApi = "https://ia-grupo4-backend.herokuapp.com/";
+//const urlApi = "http://localhost:4000/";
+const urlApi = "https://ia-grupo4-backend.herokuapp.com/";
 console.log("url", urlApi);
 
 const urlWebServices = {
