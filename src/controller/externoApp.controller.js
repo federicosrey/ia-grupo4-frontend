@@ -105,3 +105,89 @@ export const postPagosExterno = async function (movimientos, idPago) {
                 };
     
 }
+
+export const getTarjetaCodigo = async function (idLiquidacion) {
+    let url = urlWebServicesExterno.getTarjetaCodigo;
+    const formData = new URLSearchParams();
+    /*
+        {
+            "codigotransaccion": "string"
+        }
+    */
+    
+    formData.append('codigotransaccion', idLiquidacion.toString());           
+                
+            
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+            
+                    if (response.status === 200) {
+                        let data = await response.json();
+                        
+                                            
+                        return data.data.docs;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}
+
+
+
+export const getComercioCodigo = async function (idPago) {
+    let url = urlWebServicesExterno.getComercioCodigo;
+    const formData = new URLSearchParams();
+    /*
+        {
+            "codigotransaccion": "string"
+        }
+    */
+    
+    formData.append('codigotransaccion', idPago.toString());           
+                
+            
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+            
+                    if (response.status === 200) {
+                        let data = await response.json();
+                        
+                                            
+                        return data.data.docs;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}

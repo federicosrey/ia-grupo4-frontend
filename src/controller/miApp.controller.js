@@ -488,15 +488,13 @@ export const getLiquidaciones = async function (cuilUsuario) {
             
             let listarliqui = data.data;
             return listarliqui;
-        }
+         }
         else {
             let vacio = [];
-            console.log("No hay liquidaciones")
-            console.log("No hay movimientos de negocios")
+          
             return (vacio);
 
-        }
-    }
+        }     }
     catch (error) {
         console.log("error", error);
     };

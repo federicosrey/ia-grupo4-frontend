@@ -3,7 +3,7 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-//import ListSubheader from '@material-ui/core/ListSubheader';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
@@ -11,6 +11,7 @@ import PeopleIcon from '@material-ui/icons/People';
 //import LayersIcon from '@material-ui/icons/Layers';
 //import AssignmentIcon from '@material-ui/icons/Assignment';
 import PaymentIcon from '@material-ui/icons/Payment';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
@@ -145,6 +146,23 @@ export const secondaryListItems = (
             <ShoppingCartIcon />
           </ListItemIcon>
           <ListItemText primary="Pagar" />
+        </ListItem>
+      </Link>
+      <ListSubheader inset>Consultas Baires Bank</ListSubheader>
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/extlLiquidaciones">
+        <ListItem button>
+          <ListItemIcon>
+            <AccountBalanceIcon />
+          </ListItemIcon>
+          <ListItemText primary="Liquidaciones" />
+        </ListItem>
+      </Link>
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/extlPagos">
+        <ListItem button>
+          <ListItemIcon>
+            <AccountBalanceIcon />
+          </ListItemIcon>
+          <ListItemText primary="Pagos" />
         </ListItem>
       </Link>
     </div>
