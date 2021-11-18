@@ -617,7 +617,8 @@ export const postPagos = async function (movimientos) {
     const formData = new URLSearchParams();
     formData.append('cuitNegocio', movimientos.cuitNegocio);
     formData.append('total', movimientos.total);
-   
+    
+
 
                 try {
                     let response = await fetch(url, {
