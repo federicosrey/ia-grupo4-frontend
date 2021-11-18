@@ -40,7 +40,7 @@ export const postLiquidacionesExterno = async function (movimientos, idLiquidaci
                         let data = await response.json();
             
                                             
-                        return data.message;
+                        return data;
                     }
                     else {
                         return false;
@@ -93,7 +93,7 @@ export const postPagosExterno = async function (movimientos, idPago) {
                         let data = await response.json();
             
                                             
-                        return data.message;
+                        return data;
                     }
                     else {
                         return false;

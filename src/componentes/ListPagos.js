@@ -36,6 +36,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { postPagos, UpdateidPagoMovimiento, getMontosaPagaraEstablecimientos} from '../controller/miApp.controller';
 import { postPagosExterno } from '../controller/externoApp.controller';
+import swal from "sweetalert";
+import { useHistory } from 'react-router';
 
 /*function Copyright() {
   return (
@@ -136,6 +138,7 @@ export default function ListLiquidaciones() {
   const [open, setOpen] = React.useState(true);
   const [cuilcuit, setcuilcuit] = React.useState('')
   const [movimientos, setMovimientos] = React.useState([]);
+  const history = useHistory();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -146,7 +149,18 @@ export default function ListLiquidaciones() {
 
   const getAllMovimientos = async () => {
     let response  = await getMontosaPagaraEstablecimientos();
-    setMovimientos(response);
+    
+    if(response.length>0){
+      setMovimientos(response);
+    }else{
+      swal("TRANSACCION RECHAZADA", "NO HAY PAGOS PENDIENTES", "warning");
+      setTimeout(() => {
+         history.push({
+           pathname: "/adash",
+         });
+      }, 1300);
+    }
+    
   }
 
   const generarPagos = async () => {
@@ -165,17 +179,37 @@ export default function ListLiquidaciones() {
 
   const generarPagoYEnviar = async () => {
     for (var i = 0; i < movimientos.length; i++){
+      var cont = 0;
       let respons  = await postPagos(movimientos[i]);
-      let bancoRespons = await postPagosExterno(movimientos[i], respons);
+      let bancoRespons = await postPagosExterno(movimientos[i], respons.data);
       console.log("respuesta del banco", bancoRespons);
+
+      if(respons.status===201 && bancoRespons.status === 201){
+          await cont++;  
+      }
+
       for(var x = 0; x < movimientos[i].mov.length; x++){
-        let res  = await UpdateidPagoMovimiento(movimientos[i].mov[x],respons);
+        let res  = await UpdateidPagoMovimiento(movimientos[i].mov[x],respons.data);
         
       }
     }
      
-    alert("Pagos generados y enviados exitosamente");
-    
+    if(cont > 0){
+      swal("TRANSACCION OK", "Se procesaron: "+cont+" pagos.", "success");
+      setTimeout(() => {
+        history.push({
+          pathname: "/adash",
+         });
+      }, 1300);
+    }else{
+      swal("TRANSACCION RECHAZADA", "No se proceso ningún pago.", "warning");
+      setTimeout(() => {
+        history.push({
+          pathname: "/adash",
+         });
+      }, 1300);
+      
+    }   
     
   }
   
@@ -269,7 +303,7 @@ export default function ListLiquidaciones() {
             </Grid>
             
             </Grid>
-            <Grid item xs={3}>
+            {/* <Grid item xs={3}>
             
               <Button
                 fullWidth
@@ -282,7 +316,7 @@ export default function ListLiquidaciones() {
               </Button>
               
             
-            </Grid>
+            </Grid> */}
             <Grid item xs={3}>
             
               <Button

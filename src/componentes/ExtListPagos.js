@@ -34,8 +34,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getLiquidaciones, getTarjetas, postCobros, UpdateidCobroLiquidacion } from '../controller/miApp.controller';
-import { getTarjetaCodigo } from '../controller/externoApp.controller';
+import { getPagos, getTarjetas, postCobros, UpdateidCobroPago } from '../controller/miApp.controller';
+import { getComercioCodigo } from '../controller/externoApp.controller';
 import swal from "sweetalert";
 import { useHistory } from 'react-router';
 
@@ -152,13 +152,13 @@ export default function ExtListPagos() {
     setcuilcuit(event.target.value);
   }
   
-  const getAllLiquidaciones = async () => {
-    var response  = await getLiquidaciones(cuilcuit);
-    console.log("resnse ", response);
+  const getAllPagos = async () => {
+    var response  = await getPagos();
+    console.log(response)
     if(response.docs.length>0){
       setTarjetas(response.docs);
     }else{
-      swal("TRANSACCION RECHAZADA", "NO HAY LIQUIDACIONES PENDIENTES", "warning");
+      swal("TRANSACCION RECHAZADA", "NO HAY PAGOS PENDIENTES", "warning");
       setTimeout(() => {
         // history.push({
         //   pathname: "/cobrar",
@@ -169,20 +169,21 @@ export default function ExtListPagos() {
 
   const getEstadoBanco = async () => {
     for (var i = 0; i < tarjetas.length; i++){
-      var respons  = await getTarjetaCodigo(tarjetas[i]._id);
-      console.log("dsa", respons);
+      var pagos = 0;
+      var respons  = await getComercioCodigo(tarjetas[i]._id);
+      
       if(respons!=false){
         if(respons[0].pagado==1){
-          setCobros(cobros+1);
-          let res  = await postCobros(tarjetas[i]);
-          let cobro  = await UpdateidCobroLiquidacion(tarjetas[i]._id,res);
+          await pagos++;
+          let res  = await postCobros(tarjetas[i],2);
+          let cobro  = await UpdateidCobroPago(tarjetas[i]._id,res);
         }
       }
       
     }
 
     if(cobros > 0){
-        swal("TRANSACCION OK", "Se procesaron: "+cobros+" pagos.", "success");
+        swal("TRANSACCION OK", "Se procesaron: "+pagos+" pagos.", "success");
         setTimeout(() => {
           history.push({
             pathname: "/adash",
@@ -197,18 +198,6 @@ export default function ExtListPagos() {
         }, 1300);
         
     }  
-    
-  }
-
-  const generarCobro = async () => {
-    for (var i = 0; i < tarjetas.length; i++){
-      let respons  = await postCobros(tarjetas[i]);
-      
-      let res  = await UpdateidCobroLiquidacion(tarjetas[i]._id,respons);
-        
-    }
-      alert("Cobro generado exitosamente");
-    
     
   }
 
@@ -269,7 +258,7 @@ export default function ExtListPagos() {
                 fullWidth
                 variant="contained"
                 color="black"
-                onClick={() => {getAllLiquidaciones()}}
+                onClick={() => {getAllPagos()}}
               >
                 
                 Consultar
@@ -284,20 +273,22 @@ export default function ExtListPagos() {
                 <Table className={classes.table} size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>                    
-                      <TableCell>Usuario</TableCell>
-                      <TableCell align="right">Tarjeta</TableCell>
+                      <TableCell>Fecha</TableCell>
+                      <TableCell align="right">Negocio</TableCell>
                       <TableCell align="right">Total</TableCell>
                     </TableRow>
                   </TableHead>
+                  
                   <TableBody>
                     {tarjetas.map((m) => (
                       <TableRow key={m._id}>
-                        <TableCell component="th" scope="row">{m.cuilcuitUsuario}</TableCell>
-                        <TableCell align="right">{m.numeroTarjeta}</TableCell>                        
+                        <TableCell component="th" scope="row">{m.fecha}</TableCell>
+                        <TableCell align="right">{m.cuitNegocio}</TableCell>                                        
                         <TableCell align="right">{m.total}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
+                  
                 </Table>
               </TableContainer>
             </Grid>

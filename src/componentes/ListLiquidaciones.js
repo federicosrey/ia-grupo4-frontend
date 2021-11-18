@@ -36,6 +36,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { getMovimientos, postLiquidaciones, UpdateidLiquidacionMovimiento } from '../controller/miApp.controller';
 import { postLiquidacionesExterno } from '../controller/externoApp.controller';
+import swal from "sweetalert";
+import { useHistory } from 'react-router';
 
 /*function Copyright() {
   return (
@@ -136,6 +138,7 @@ export default function ListLiquidaciones() {
   const [open, setOpen] = React.useState(true);
   const [cuilcuit, setcuilcuit] = React.useState('')
   const [movimientos, setMovimientos] = React.useState([]);
+  const history = useHistory();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -152,8 +155,16 @@ export default function ListLiquidaciones() {
 
   const getAllMovimientos = async () => {
     let response  = await getMovimientos();
-    console.log("respon", response);
-    setMovimientos(response);
+    if(response.length>0){
+      setMovimientos(response);
+    }else{
+      swal("TRANSACCION RECHAZADA", "NO HAY LIQUIDACIONES PENDIENTES", "warning");
+      setTimeout(() => {
+         history.push({
+           pathname: "/adash",
+         });
+      }, 1300);
+    }
   }
 
   const generarLiquidacion = async () => {
@@ -174,18 +185,36 @@ export default function ListLiquidaciones() {
   }
   const generarLiquidacionYEnviar = async () => {
     for (var i = 0; i < movimientos.length; i++){
+      var cont=0;
       let respons  = await postLiquidaciones(movimientos[i]);
-      let bancoRespons = await postLiquidacionesExterno(movimientos[i], respons);
-      console.log("respuesta del banco", bancoRespons);
+      let bancoRespons = await postLiquidacionesExterno(movimientos[i], respons.data);
+      
+      if(respons.status===201 && bancoRespons.status === 201){
+        await cont++;  
+      }
+
       for(var x = 0; x < movimientos[i].mov.length; x++){
-        let res  = await UpdateidLiquidacionMovimiento(movimientos[i].mov[x],respons);
+        let res  = await UpdateidLiquidacionMovimiento(movimientos[i].mov[x],respons.data);
         
       }
     }
      
-    alert("Liquidaciones generadas y enviadas exitosamente");
-    
-    
+    if(cont > 0){
+      swal("TRANSACCION OK", "Se procesaron: "+cont+" liquidaciones.", "success");
+      setTimeout(() => {
+        history.push({
+          pathname: "/adash",
+         });
+      }, 1300);
+    }else{
+      swal("TRANSACCION RECHAZADA", "No se proceso ninguna liquidación.", "warning");
+      setTimeout(() => {
+        history.push({
+          pathname: "/adash",
+         });
+      }, 1300);
+      
+    } 
   }
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -279,7 +308,7 @@ export default function ListLiquidaciones() {
             </Grid>
             
             </Grid>
-            <Grid item xs={3}>
+            {/* <Grid item xs={3}>
             
               <Button
                 fullWidth
@@ -291,7 +320,7 @@ export default function ListLiquidaciones() {
                 Liquidar
               </Button>
             
-            </Grid>
+            </Grid> */}
             <Grid item xs={3}>
             
               <Button

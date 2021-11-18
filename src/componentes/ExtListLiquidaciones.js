@@ -138,7 +138,7 @@ export default function ExtListLiquidaciones() {
   const [open, setOpen] = React.useState(true);
   const [cuilcuit, setcuilcuit] = React.useState('')
   const [tarjetas, setTarjetas] = React.useState([]);
-  const [cobros, setCobros] = React.useState(0);
+  
   const history = useHistory();
 
   const handleDrawerOpen = () => {
@@ -169,12 +169,13 @@ export default function ExtListLiquidaciones() {
 
   const getEstadoBanco = async () => {
     for (var i = 0; i < tarjetas.length; i++){
+      var cobros=0;
       var respons  = await getTarjetaCodigo(tarjetas[i]._id);
-      console.log("dsa", respons);
+      
       if(respons!=false){
         if(respons[0].pagado==1){
-          setCobros(cobros+1);
-          let res  = await postCobros(tarjetas[i]);
+          await cobros++;
+          let res  = await postCobros(tarjetas[i],1);
           let cobro  = await UpdateidCobroLiquidacion(tarjetas[i]._id,res);
         }
       }
@@ -197,18 +198,6 @@ export default function ExtListLiquidaciones() {
         }, 1300);
         
     }  
-    
-  }
-
-  const generarCobro = async () => {
-    for (var i = 0; i < tarjetas.length; i++){
-      let respons  = await postCobros(tarjetas[i]);
-      
-      let res  = await UpdateidCobroLiquidacion(tarjetas[i]._id,respons);
-        
-    }
-      alert("Cobro generado exitosamente");
-    
     
   }
 
@@ -284,6 +273,7 @@ export default function ExtListLiquidaciones() {
                 <Table className={classes.table} size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>                    
+                    <TableCell>Fecha</TableCell>
                       <TableCell>Usuario</TableCell>
                       <TableCell align="right">Tarjeta</TableCell>
                       <TableCell align="right">Total</TableCell>
@@ -292,7 +282,8 @@ export default function ExtListLiquidaciones() {
                   <TableBody>
                     {tarjetas.map((m) => (
                       <TableRow key={m._id}>
-                        <TableCell component="th" scope="row">{m.cuilcuitUsuario}</TableCell>
+                        <TableCell component="th" scope="row">{m.fecha}</TableCell>
+                        <TableCell align="left">{m.cuilcuitUsuario}</TableCell>                        
                         <TableCell align="right">{m.numeroTarjeta}</TableCell>                        
                         <TableCell align="right">{m.total}</TableCell>
                       </TableRow>

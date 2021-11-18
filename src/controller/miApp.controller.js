@@ -599,7 +599,7 @@ export const postLiquidaciones = async function (movimientos) {
             
                         
                         
-                        return data.data;
+                        return data;
                     }
                     else {
                         return false;
@@ -637,7 +637,7 @@ export const postPagos = async function (movimientos) {
             
                         
                         
-                        return data.data;
+                        return data;
                     }
                     else {
                         return false;
@@ -650,11 +650,56 @@ export const postPagos = async function (movimientos) {
     
 }
 
-export const postCobros = async function (liquidacion) {
+export const getPagos = async function () {
+    let url = urlWebServices.getPagos;
+    console.log(url);
+    const formData = new URLSearchParams();
+    
+    try {
+        let response = await fetch(url, {
+            method: 'POST', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body:formData
+        });
+
+        if (response.status === 200) {
+            let data = await response.json();
+            
+            let listarPagos = data.data;
+            return listarPagos;
+         }
+        else {
+            let vacio = [];
+          
+            return (vacio);
+
+        }     }
+    catch (error) {
+        console.log("error", error);
+    };
+}
+
+export const postCobros = async function (liquidacion, doc) {
     let url = urlWebServices.postCobros;
     const formData = new URLSearchParams();
-    formData.append('cuilUsuario', liquidacion.cuilUsuario);
-    formData.append('total', liquidacion.total);
+
+    if(doc===1){
+        //es una liquidacion
+        formData.append('cuilUsuario', liquidacion.cuilUsuario);
+        formData.append('total', liquidacion.total);
+    }else{
+        //es un pago
+        formData.append('cuilUsuario', liquidacion.cuitNegocio);
+        formData.append('total', liquidacion.total);
+    }
+
+    
     
 
                 try {
@@ -760,6 +805,40 @@ export const UpdateidCobroLiquidacion = async function (idLiquidacion, idCobro) 
     let url = urlWebServices.UpdateidCobroLiquidacion;
     const formData = new URLSearchParams();
     formData.append('idLiquidacion', idLiquidacion);
+    formData.append('idCobro', idCobro);
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+                    
+                    if (response.status === 201) {
+                        
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}
+
+export const UpdateidCobroPago = async function (idPago, idCobro) {
+    let url = urlWebServices.UpdateidCobroPago;
+    const formData = new URLSearchParams();
+    formData.append('idPago', idPago);
     formData.append('idCobro', idCobro);
 
                 try {
