@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+![version](https://img.shields.io/badge/version-1.0.0-blue.svg) 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Presentacion del producto
+![Product Presentation Image](https://i.ibb.co/TtMDY5Q/gipeylogo.png)
 
-## Available Scripts
+## Descripcion
 
-In the project directory, you can run:
+<p>Nuestro proyecto consta en hacer una aplicacion tomando el rol de una entidad de credito, comunicarnos con distintos clientes y bancos para hacer las operatorias requeridas.</p>
 
-### `npm start`
+## Tabla de contenidos
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* [Integrantes](#Integrantes)
+* [Tecnologia](#Tecnologia)
+* [Instalacion](#Instalacion)
+* [End-Points](#End-Points)
+* [Base de datos](#Base-de-datos)
+* [Recursos](#Recursos)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Integrantes grupo 4
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Enriquez, Ariel Leandro               <b>Legajo : 1037578</b>
+* Rey, Federico Sebastian               <b>Legajo : 1084711</b>
+* Tessa, Geronimo Ezequiel              <b>Legajo : 1046413</b>
 
-### `npm run build`
+## Tecnologia
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<img src="https://i.ibb.co/GR1VxFh/material-ui.png" width="64" height="64" /><img src="https://i.ibb.co/bsJMq4X/aps-504x498-small-transparent-pad-600x600-f8f8f8-u1.jpg" width="64" height="64" /><img src="https://i.ibb.co/8z4nT69/swagger-round.png" width="64" height="64" /><img src="https://i.ibb.co/gDdLc4Z/heroku.png" width="64" height="64" /><img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/html-logo.jpg?raw=true" width="64" height="64" /><img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/react-logo.jpg?raw=true" width="64" height="64" />
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Instalacion
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## FrontEnd
 
-### `npm run eject`
+* Descargar la aplicacion del repositorio https://github.com/federicosrey/ia-grupo4-frontend
+* En la carpeta del proyecto ejecutar <b>npm install</b>
+* <b>cd</b> ia-grupo4-frontend
+* Luego dar <b>npm start</b>
+* Se levantará en local http://localhost:3000/
+* Tambien se encuentra hosteado en Heroku https://ia-grupo4-frontend.herokuapp.com/
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## BackEnd
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* El backend de la aplicacion se encuesta en ek siguiente repositorio https://github.com/federicosrey/ia-grupo4-backend
+* En la carpeta del proyecto ejecutar <b>npm install</b>
+* <b>cd</b> ia-grupo4-backend
+* Luego dar <b>npm start</b>
+* Se levantará en local http://localhost:4000/
+* Tambien se encuentra hosteado en Heroku https://ia-grupo4-backend.herokuapp.com/
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## End-Points
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+El backend tiene configurado los siguientes endpoints :
 
-## Learn More
+<b><p>Cobro (api/users/agregarMovimiento)</b></p>
+<p>Se utiliza para poder registrar los cobros de cada cliente</p>
+<p>Metodo : POST</p>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+ * cuiUsuario: String
+ * cuitNegocio: String
+ * numeroTarjeta: Integer
+ * monto: Integer
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Tanto los endpoints como los modelos de datos se encuentran en swagger en el siguiente link
 
-### Code Splitting
+- SWAGGER: <https://ia-grupo4-backend.herokuapp.com/endpoints/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Base de Datos
 
-### Analyzing the Bundle Size
+<p>Para la base de datos utilizamos MongoDB</p>
+<p>Poseemos el siguiente Cluster configurado <b>cluster0.vypin.mongodb.net</b></p>
+<p>En la ruta /ia-grupo4-backend/models, se encuentran los modelos de datos para los documentos</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Recursos
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- GIT: <https://github.com/federicosrey/ia-grupo4-backend>
+- GIT: <https://github.com/federicosrey/ia-grupo4-frontend>
