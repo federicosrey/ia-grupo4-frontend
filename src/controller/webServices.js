@@ -16,6 +16,8 @@ const urlWebServices = {
     deleteUsuario: urlApi + "api/users/usr",
     updateUsuario: urlApi + "api/users/actualizacion",
     getInfoUsuario: urlApi + "api/users/getInfoUsuario",
+    updateTarjetaLiquidacion: urlApi + "api/users/updateTarjetaLiquidacion",
+    updatePass: urlApi + "api/users/updatePass",
 
     //Agregar Tarjetas
     agregarTarjeta: urlApi + "api/users/tarjeta",
@@ -35,10 +37,14 @@ const urlWebServices = {
     postLiquidaciones: urlApi + "api/users/postLiquidaciones",
     getLiquidaciones: urlApi + "api/users/getLiquidaciones",
     UpdateidCobroLiquidacion: urlApi + "api/users/UpdateidCobroLiquidacion",
+    getULiquidaciones: urlApi + "api/users/getULiquidaciones",
 
     //Pagos
     postPagos: urlApi + "api/users/agregarPago",
     getMontosaPagaraEstablecimientos: urlApi + "api/users/getMontosaPagaraEstablecimientos",
+    getNPagos: urlApi + "api/users/getNPagos",
+    getPagos: urlApi + "api/users/getPagos",
+    
 
     //Cobros
     postCobros: urlApi + "api/users/agregarCobro",
