@@ -1,4 +1,4 @@
-![version](https://img.shields.io/badge/version-1.0.0-blue.svg) 
+ ![version](https://img.shields.io/badge/version-1.0.0-blue.svg) 
 
 ## Presentacion del producto
 ![Product Presentation Image](https://i.ibb.co/TtMDY5Q/gipeylogo.png)
@@ -46,6 +46,12 @@
 * Luego dar <b>npm start</b>
 * Se levantará en local http://localhost:4000/
 * Tambien se encuentra hosteado en Heroku https://ia-grupo4-backend.herokuapp.com/
+
+## Navegadores soportados
+
+Se probo en los siguientes navegadores: 
+
+<img src="https://i.ibb.co/6v017Nk/pngegg.png">
 
 ## End-Points
 
