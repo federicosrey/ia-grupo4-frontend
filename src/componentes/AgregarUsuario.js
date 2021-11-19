@@ -28,6 +28,8 @@ import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import { Button } from '@material-ui/core';
 import {Link as Linkear} from 'react-router-dom';
+
+import swal from "sweetalert";
 import { useHistory } from 'react-router';
 
 //importo controller
@@ -142,7 +144,8 @@ export default function AgregarUsuario() {
   const [cuilcuit, setcuilcuit] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('');
-  const [root, setRoot] = React.useState('')
+  const [root, setRoot] = React.useState('');
+  const [DNI, setDNI] = React.useState('')
   const history = useHistory()
 
   const handleChange = (event) => {
@@ -166,6 +169,11 @@ export default function AgregarUsuario() {
   const handleRoot = (event) => {
     setRoot(event.target.value)
   }
+
+  const handleDNI = (event) => {
+    setDNI(event.target.value)
+  }
+
   const isEmpty = (stringToValidate) => {
     if (stringToValidate !== undefined && stringToValidate !== null) {
       return stringToValidate.length === 0
@@ -188,19 +196,37 @@ export default function AgregarUsuario() {
       return true;
     };
 
-    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
-      archivoUsuarios = await guardarUsuario (nombre,lastname,email,cuilcuit,root,password)
+    //if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
+    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(DNI)) {
+      archivoUsuarios = await guardarUsuario (nombre,lastname,email,cuilcuit,root,DNI);
+      swal("TRANSACCION OK", "Usuario agregado exitosamente.", "success");
+        setTimeout(() => {
+          history.push({
+            pathname: "/lusuarios",
+           });
+        }, 1300);
     }
     else {
-      alert("Completar todos los datos.")
+      //alert("Completar todos los datos.")
+
+      
+        swal("DATOS INCOMPLETOS", "Complete todos los datos para continuar.", "warning");
+        setTimeout(() => {
+          history.push({
+            pathname: "/ausuario",
+           });
+        }, 1300);
+        
+      
+
     }
   }
 
   const redirect = async () => {
     const ok = await subirUsuario()
-    if (ok) {
-      history.push("/lusuario")
-    }    
+    // if (ok) {
+    //   history.push("/lusuario")
+    // }    
   }
 
 
@@ -334,6 +360,20 @@ export default function AgregarUsuario() {
                 variant="outlined"
                 required
                 fullWidth
+                id="dni"
+                label="DNI"
+                name="dni"
+                autoComplete="DNI"
+                inputProps={{
+                  onChange: (event) => handleDNI(event),
+                }}
+              />
+            </Grid>
+            {/* <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
                 name="password"
                 label="Contraseña"
                 type="password"
@@ -343,7 +383,7 @@ export default function AgregarUsuario() {
                   onChange: (event) => handlePassword(event),
                 }}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <FormControl component="fieldset">
                 <FormLabel component="legend"></FormLabel>
@@ -360,28 +400,37 @@ export default function AgregarUsuario() {
                     label="Negocio" 
                     onChange={handleRoot}
                     />
+                    <FormControlLabel 
+                    value="A" 
+                    control={<Radio />} 
+                    label="Administrador" 
+                    onChange={handleRoot}
+                    />
                 </RadioGroup>
               </FormControl>
             </Grid>
             </Grid>        
             
-          <Linkear  style={{textDecoration:'none'}} to = '/lusuarios'>
+          
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Button
-                  type="submit"
+                  //type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
                   className={classes.submit}
                   onClick={() => {redirect()}}
+                  
                 >
                   Agregar
                 </Button>
               </Grid>
+              
               <Grid item xs={12} sm={6}>  
+              <Linkear  style={{textDecoration:'none'}} to = '/lusuarios'>
                 <Button
-                  type="submit"
+                  //type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
@@ -389,9 +438,11 @@ export default function AgregarUsuario() {
                 >
                 Cancelar
                 </Button>
+                </Linkear>
               </Grid>
+              
             </Grid>
-          </Linkear>
+          
         </form>
       </div>
      

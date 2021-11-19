@@ -108,13 +108,17 @@ export default function SignIn() {
   }
   const redirect = () => {
     if (usuarioRoot) {
-      return <Redirect to="/adash" />
+      //return <Redirect to="/adash" />
+      return <Redirect to="/lusuarios" />
     }
     else if (usuarioValido) {
-      return <Redirect to="/dash" />
+      //return <Redirect to="/dash" />
+      return <Redirect to="/movimientos" />
+      
     }
     else if (usuarioNeg) {
-      return <Redirect to="/ndash" />
+      //return <Redirect to="/ndash" />
+      return <Redirect to="/nmovimientos" />
     }
   }
 
@@ -180,7 +184,7 @@ export default function SignIn() {
             </Grid> */} 
             <Grid item>
               <Linkear  style={{textDecoration:'none'}} to = "/signup">
-                {"No tenés una cuenta? Registrate"}
+                {"Generá tu primera contraseña"}
               </Linkear>
             </Grid> 
           </Grid>

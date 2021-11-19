@@ -180,13 +180,20 @@ export default function ListLiquidaciones() {
   const generarPagoYEnviar = async () => {
     for (var i = 0; i < movimientos.length; i++){
       var cont = 0;
+      var bcont = 0;
       let respons  = await postPagos(movimientos[i]);
       let bancoRespons = await postPagosExterno(movimientos[i], respons.data);
       console.log("respuesta del banco", bancoRespons);
 
-      if(respons.status===201 && bancoRespons.status === 201){
-          await cont++;  
-      }
+      if(respons.status===201){
+        
+        await cont++;  
+       
+     }
+
+     if(bancoRespons.status === 201){
+         await bcont++;  
+     }
 
       for(var x = 0; x < movimientos[i].mov.length; x++){
         let res  = await UpdateidPagoMovimiento(movimientos[i].mov[x],respons.data);
@@ -195,17 +202,17 @@ export default function ListLiquidaciones() {
     }
      
     if(cont > 0){
-      swal("TRANSACCION OK", "Se procesaron: "+cont+" pagos.", "success");
+      swal("TRANSACCION OK", "Se procesaron: "+cont+" pagos correctamente.\n BAIRES BANK procesó "+bcont+" pagos correctamente.", "success");
       setTimeout(() => {
         history.push({
-          pathname: "/adash",
+          pathname: "/lusuarios",
          });
       }, 1300);
     }else{
       swal("TRANSACCION RECHAZADA", "No se proceso ningún pago.", "warning");
       setTimeout(() => {
         history.push({
-          pathname: "/adash",
+          pathname: "/lusuarios",
          });
       }, 1300);
       

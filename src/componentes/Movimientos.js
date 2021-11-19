@@ -214,7 +214,8 @@ export default function Movimientos() {
               <TableBody>
                 {movimientos.map((m) => (
                     <TableRow key={m._id}>
-                      <TableCell component="th" scope="row">{dateFormat(m.fecha,"dd/mm/yyyy")}</TableCell>
+                      {/* <TableCell component="th" scope="row">{dateFormat(m.fecha,"dd/mm/yyyy")}</TableCell> */}
+                      <TableCell component="th" scope="row">{m.fecha}</TableCell>
                       <TableCell>{m.numeroTarjeta}</TableCell>
                       <TableCell align="right">{m.monto}</TableCell>
                     </TableRow>

@@ -26,7 +26,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import dateFormat from "dateformat";
-
+import moment from 'moment';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -148,7 +148,8 @@ export default function AsignarTarjeta() {
     
    
     // if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty(password)) {
-    var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada, codigoSeguridad, dateFormat(fechaCierre,'yyyy-mm-dd').toString(),dateFormat(fechaVencimiento,'yyyy-mm-dd').toString());
+    //var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada, codigoSeguridad, dateFormat(fechaCierre,'yyyy-mm-dd').toString(),dateFormat(fechaVencimiento,'yyyy-mm-dd').toString());
+    var procesoAsignacion = await asignarTarjeta (usuarioSeleccionado, tarjetaSeleccionada, codigoSeguridad, moment(fechaCierre).format('YYYY-MM-DD') ,moment(fechaVencimiento).format('YYYY-MM-DD'));
     //}
     //else {
     //  alert("Completar todos los datos.")

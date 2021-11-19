@@ -101,7 +101,7 @@ export const guardarContacto = async function (razonsocial, email, region, tama√
 }
 
 // Guardar usuario
-export const guardarUsuario = async function (name, lastname, email, cuilcuit, root, password) {
+export const guardarUsuario = async function (name, lastname, email, cuilcuit, root, dni) {
     let url = urlWebServices.guardarUsuario;
     const formData = new URLSearchParams();
     formData.append('name', name);
@@ -109,7 +109,7 @@ export const guardarUsuario = async function (name, lastname, email, cuilcuit, r
     formData.append('email', email);
     formData.append('cuilcuit', cuilcuit);
     formData.append('root', root);
-    formData.append('password', password);
+    formData.append('dni', dni);
 
     try {
         let response = await fetch(url, {
@@ -612,6 +612,44 @@ export const postLiquidaciones = async function (movimientos) {
     
 }
 
+export const updateTarjetaLiquidacion = async function (movimientos) {
+    let url = urlWebServices.updateTarjetaLiquidacion;
+    const formData = new URLSearchParams();
+    formData.append('cuilUsuario', movimientos.cuilUsuario);
+    formData.append('numerotarjeta', movimientos.numeroTarjeta);
+            
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+            
+                    if (response.status === 201) {
+                        let data = await response.json();
+            
+                        
+                        
+                        return data;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}
+
+
 export const postPagos = async function (movimientos) {
     let url = urlWebServices.postPagos;
     const formData = new URLSearchParams();
@@ -841,6 +879,40 @@ export const UpdateidCobroPago = async function (idPago, idCobro) {
     const formData = new URLSearchParams();
     formData.append('idPago', idPago);
     formData.append('idCobro', idCobro);
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        mode: "cors",
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'x-access-token': localStorage.getItem('x'),
+                            'Origin': 'http://localhost:3000',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+                    
+                    if (response.status === 201) {
+                        
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                catch (error) {
+                    console.log("error", error);
+                    return false;
+                };
+    
+}
+
+export const updatePass = async function (dni, pass) {
+    let url = urlWebServices.updatePass;
+    const formData = new URLSearchParams();
+    formData.append('dni', dni);
+    formData.append('pass', pass);
 
                 try {
                     let response = await fetch(url, {
@@ -1192,5 +1264,75 @@ export const deleteEncuesta = async function (id_encuesta) {
     catch (error) {
         console.log("error", error);
         return false;
+    };
+}
+
+export const getULiquidaciones = async function (cuilUsuario) {
+    
+    let url = urlWebServices.getULiquidaciones;
+    const formData = new URLSearchParams();
+    formData.append('cuilUsuario', cuilUsuario);
+    try {
+        let response = await fetch(url, {
+            method: 'POST', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body:formData
+        });
+        if (response.status === 200) {
+            let data = await response.json();
+            let listarliqui = data.data.docs;
+            return listarliqui;
+        }
+        else {
+            let vacio = [];
+            console.log("No hay liquidaciones")
+            console.log("No hay movimientos de negocios")
+            return (vacio);
+
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+    };
+}
+
+export const getNPagos = async function (cuitNegocio) {
+    
+    let url = urlWebServices.getNPagos;
+    const formData = new URLSearchParams();
+    formData.append('cuitNegocio', cuitNegocio);
+    try {
+        let response = await fetch(url, {
+            method: 'POST', // or 'PUT'
+            mode: "cors",
+            headers: {
+                'Accept': 'application/x-www-form-urlencoded',
+                'x-access-token': localStorage.getItem('x'),
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body:formData
+        });
+        if (response.status === 200) {
+            let data = await response.json();
+            let listarliqui = data.data.docs;
+            return listarliqui;
+        }
+        else {
+            let vacio = [];
+            console.log("No hay liquidaciones")
+            console.log("No hay movimientos de negocios")
+            return (vacio);
+
+        }
+    }
+    catch (error) {
+        console.log("error", error);
     };
 }

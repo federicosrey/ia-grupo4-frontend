@@ -46,7 +46,7 @@ export default function ButtonAppBar() {
               </Link>
               <Link style={estilo} to ="/signup">
                 
-                  Registrarse
+                  Primer Inicio de Sesión
                 
               </Link>
           </Toolbar>

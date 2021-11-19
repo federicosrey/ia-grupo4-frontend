@@ -34,7 +34,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getMovimientos, postLiquidaciones, UpdateidLiquidacionMovimiento } from '../controller/miApp.controller';
+import { getMovimientos, postLiquidaciones, UpdateidLiquidacionMovimiento, updateTarjetaLiquidacion } from '../controller/miApp.controller';
 import { postLiquidacionesExterno } from '../controller/externoApp.controller';
 import swal from "sweetalert";
 import { useHistory } from 'react-router';
@@ -185,12 +185,21 @@ export default function ListLiquidaciones() {
   }
   const generarLiquidacionYEnviar = async () => {
     for (var i = 0; i < movimientos.length; i++){
+      var bcont=10;
       var cont=0;
       let respons  = await postLiquidaciones(movimientos[i]);
+      let updateValores = await updateTarjetaLiquidacion(movimientos[i]);
+      
       let bancoRespons = await postLiquidacionesExterno(movimientos[i], respons.data);
       
-      if(respons.status===201 && bancoRespons.status === 201){
-        await cont++;  
+      if(respons.status===201){
+        
+         await cont++;  
+        
+      }
+
+      if(bancoRespons.status === 201){
+          await bcont++;  
       }
 
       for(var x = 0; x < movimientos[i].mov.length; x++){
@@ -200,17 +209,17 @@ export default function ListLiquidaciones() {
     }
      
     if(cont > 0){
-      swal("TRANSACCION OK", "Se procesaron: "+cont+" liquidaciones.", "success");
+      swal("TRANSACCION OK", "Se procesaron: "+cont+" liquidaciones correctamente.\n BAIRES BANK procesó "+bcont+" liquidaciones correctamente.", "success");
       setTimeout(() => {
         history.push({
-          pathname: "/adash",
+          pathname: "/lusuarios",
          });
       }, 1300);
     }else{
       swal("TRANSACCION RECHAZADA", "No se proceso ninguna liquidación.", "warning");
       setTimeout(() => {
         history.push({
-          pathname: "/adash",
+          pathname: "/lusuarios",
          });
       }, 1300);
       

@@ -39,6 +39,7 @@ import { getTarjetaCodigo } from '../controller/externoApp.controller';
 import swal from "sweetalert";
 import { useHistory } from 'react-router';
 
+
 /*function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -186,14 +187,14 @@ export default function ExtListLiquidaciones() {
         swal("TRANSACCION OK", "Se procesaron: "+cobros+" pagos.", "success");
         setTimeout(() => {
           history.push({
-            pathname: "/adash",
+            pathname: "/lusuarios",
            });
         }, 1300);
       }else{
         swal("TRANSACCION RECHAZADA", "No se proceso ningún pago.", "warning");
         setTimeout(() => {
           history.push({
-            pathname: "/adash",
+            pathname: "/lusuarios",
            });
         }, 1300);
         

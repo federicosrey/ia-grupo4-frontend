@@ -23,6 +23,8 @@ import ListPagos from './componentes/ListPagos';
 import NMovimientos from './componentes/NMovimientos';
 import ExtListLiquidaciones from './componentes/ExtListLiquidaciones';
 import ExtListPagos from './componentes/ExtListPagos';
+import ULiquidaciones from './componentes/ULiquidaciones';
+import NPagos from './componentes/NPagos';
 
 
 //import ButtonAppBar from './componentes/AppBar';
@@ -57,6 +59,8 @@ function App() {
         <Route path="/nmovimientos"   component={NMovimientos} />
         <Route path="/extlLiquidaciones"   component={ExtListLiquidaciones} />
         <Route path="/extlPagos"   component={ExtListPagos} />
+        <Route path="/uLiquidaciones"   component={ULiquidaciones} />
+        <Route path="/nPagos"   component={NPagos} />
       </Switch>  
      
     </Router>

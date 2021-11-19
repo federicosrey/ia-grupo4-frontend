@@ -16,12 +16,14 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import {Link as Linkear} from 'react-router-dom';
+
+import swal from "sweetalert";
 import { useHistory } from 'react-router';
 //import clsx from 'clsx';
 
 //importo controller
 
-import { guardarUsuario } from "../controller/miApp.controller"
+import { updatePass } from "../controller/miApp.controller"
 
 function Copyright() {
   return (
@@ -64,7 +66,7 @@ export default function SignUp() {
   //const [open, setOpen] = React.useState(true);
   const [nombre, setNombre] = React.useState('');
   const [lastname, setLastname] = React.useState('');
-  const [cuilcuit, setcuilcuit] = React.useState('')
+  const [DNI, setDNI] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('');
   const [root, setRoot] = React.useState('')
@@ -79,8 +81,8 @@ export default function SignUp() {
   const handleNombre = (event) => {
     setNombre(event.target.value);
   }
-  const handlecuilcuit = (event) => {
-    setcuilcuit(event.target.value);
+  const handleDNI = (event) => {
+    setDNI(event.target.value);
   }
   const handleLastname= (event) => {
     setLastname(event.target.value);
@@ -101,36 +103,43 @@ const isEmpty = (stringToValidate) => {
   const subirUsuario = async function () {
     let archivoUsuarios = false;
 
-    const validateValidEmail = (stringToValidate) => {
+    
 
-      if (typeof stringToValidate !== undefined) {
-        let lastAtPos = stringToValidate.lastIndexOf('@');
-        let lastDotPos = stringToValidate.lastIndexOf('.');
-        if (!(lastAtPos < lastDotPos && lastAtPos > 0 && stringToValidate.indexOf('@@') === -1 && lastDotPos > 2 && (stringToValidate.length - lastDotPos) > 2)) {
-          return stringToValidate.length === 0
-        }
+      
+
+    if (!isEmpty(DNI) && !isEmpty(password)) {
+      archivoUsuarios = await updatePass (DNI,password)
+      console.log(archivoUsuarios);
+      if(archivoUsuarios){
+        swal("TRANSACCION OK", "Contraseña generada con éxito!!.", "success");
+        setTimeout(() => {
+          history.push({
+            pathname: "/",
+           });
+        }, 1300);
+      }else{
+        swal("HA OCURRIDO UN ERROR", "La contraseña no pudo ser generada.", "warning");
+        setTimeout(() => {
+          history.push({
+            pathname: "/signup",
+           });
+        }, 1300);
       }
-      return true;
-    };
-
-    if (!isEmpty(nombre) && validateValidEmail(email) && !isEmpty(lastname) && !isEmpty(cuilcuit) && !isEmpty (root) && !isEmpty(password)) {
-      archivoUsuarios = await guardarUsuario (nombre,lastname,email,cuilcuit,root,password)
-      alert("Usuario creado correctamente.")
-          }
-    else {
-      alert("Completar todos los datos.")
-      return false;
+    
+    }else {
+      swal("DATOS INCOMPLETOS", "Complete todos los datos para continuar.", "warning");
+        setTimeout(() => {
+          history.push({
+            pathname: "/signup",
+           });
+        }, 1300);
+      
     }
   }
 
   const redirect = async () => {
-    const ok = await subirUsuario()
-    if (ok === true) {
-      history.push("/signin")
-    }
-    else if (ok ===false ){
-      history.push("/signup")
-    }
+    await subirUsuario()
+    
   }
 
 /*const handleDrawerOpen = () => {
@@ -150,11 +159,14 @@ const isEmpty = (stringToValidate) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Registrarse
+          Bienvenido a GIPEY          
+        </Typography>
+        <Typography component="h1" variant="h5">          
+          Crea tu contraseña por primera vez 
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
@@ -196,18 +208,18 @@ const isEmpty = (stringToValidate) => {
                   onChange: (event) => handleEmail(event),
                 }}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="cuilcuit"
-                label="cuilcuit"
-                name="cuilcuit"
-                autoComplete="cuilcuit"
+                id="dni"
+                label="DNI"
+                name="dni"
+                autoComplete="DNI"
                 inputProps={{
-                  onChange: (event) => handlecuilcuit(event),
+                  onChange: (event) => handleDNI(event),
                 }}
               />
             </Grid>
@@ -226,25 +238,7 @@ const isEmpty = (stringToValidate) => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend"></FormLabel>
-                <RadioGroup row aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-                  <FormControlLabel 
-                    value="U" 
-                    control={<Radio />} 
-                    label="Persona" 
-                    onChange={handleRoot}
-                    />
-                  <FormControlLabel 
-                    value="N" 
-                    control={<Radio />} 
-                    label="Negocio" 
-                    onChange={handleRoot}
-                    />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
+            
           </Grid>
           
           <Linkear  style={{textDecoration:'none'}} to = "/signin">
@@ -256,13 +250,13 @@ const isEmpty = (stringToValidate) => {
               className={classes.submit}
               onClick={() => {redirect()}}
             >
-              Registrarse
+              COMENZAR
             </Button>
           </Linkear>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Linkear  style={{textDecoration:'none'}} to = "/signin">
-                Ya tienes una cuenta? Inicia Sesión
+                Ya iniciaste tu sesión por primera vez? Inicia Sesión
               </Linkear>
             </Grid>
           </Grid>

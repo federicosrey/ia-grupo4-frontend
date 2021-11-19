@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,21 +12,18 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 //import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+//import Grid from '@material-ui/core/Grid';
 //import Paper from '@material-ui/core/Paper';
 //import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 //import NotificationsIcon from '@material-ui/icons/Notifications';
-import { /*mainListItems, secondaryListItems,*/ tertiaryListItems } from './listItems';
+import { mainListItems, secondaryListItems, /*secondaryListItems*/ } from './listItems';
 //import Chart from './Chart';
 //import Deposits from './Deposits';
 //import Orders from './Orders';
 import AlertDialog from './AlertDialog';
-import TTarjetas from './TTarjetas';
-import {Link as Linkear} from 'react-router-dom';
-import { Button, TextField } from '@material-ui/core';
-//import DialogoPago from './DialogoPago';
+import Tabla from './NTabla';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -34,10 +31,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getPagos, getTarjetas, postCobros, UpdateidCobroPago } from '../controller/miApp.controller';
-import { getComercioCodigo } from '../controller/externoApp.controller';
-import swal from "sweetalert";
-import { useHistory } from 'react-router';
+import { getNPagos } from '../controller/miApp.controller';
+import dateFormat from "dateformat";
+
 
 /*function Copyright() {
   return (
@@ -131,15 +127,26 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  table: {
+    minWidth: 650,
+  },
 }));
 
-export default function ExtListPagos() {
+export default function NPagos() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [cuilcuit, setcuilcuit] = React.useState('')
-  const [tarjetas, setTarjetas] = React.useState([]);
-  const [cobros, setCobros] = React.useState(0);
-  const history = useHistory();
+  const [movimientos, setMovimientos] = useState([]);
+
+  useEffect(() => {
+    getAllMovimientos();     
+    console.log("movimientos ", movimientos)       
+  },[]);
+
+  const getAllMovimientos = async () => {
+    let response  = await getNPagos(localStorage.getItem("cuilcuit"));
+    console.log(response);
+    setMovimientos(response);
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -147,61 +154,6 @@ export default function ExtListPagos() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  const handlecuilcuit = (event) => {
-    setcuilcuit(event.target.value);
-  }
-  
-  const getAllPagos = async () => {
-    var response  = await getPagos();
-    console.log(response)
-    if(response.docs.length>0){
-      setTarjetas(response.docs);
-    }else{
-      swal("TRANSACCION RECHAZADA", "NO HAY PAGOS PENDIENTES", "warning");
-      setTimeout(() => {
-        // history.push({
-        //   pathname: "/cobrar",
-        // });
-      }, 1300);
-    }
-  }
-
-  const getEstadoBanco = async () => {
-    for (var i = 0; i < tarjetas.length; i++){
-      var pagos = 0;
-      var respons  = await getComercioCodigo(tarjetas[i]._id);
-      
-      if(respons!=false){
-        if(respons[0].pagado==1){
-          await pagos++;
-          let res  = await postCobros(tarjetas[i],2);
-          let cobro  = await UpdateidCobroPago(tarjetas[i]._id,res);
-        }
-      }
-      
-    }
-
-    if(pagos > 0){
-        swal("TRANSACCION OK", "Se procesaron: "+pagos+" pagos.", "success");
-        setTimeout(() => {
-          history.push({
-            pathname: "/lusuarios",
-           });
-        }, 1300);
-      }else{
-        swal("TRANSACCION RECHAZADA", "No se proceso ningún pago.", "warning");
-        setTimeout(() => {
-          history.push({
-            pathname: "/lusuarios",
-           });
-        }, 1300);
-        
-    }  
-    
-  }
-
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   
 
   return (
@@ -220,7 +172,7 @@ export default function ExtListPagos() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            G I P E Y | ADMINISTRADOR
+            G I P E Y | NEGOCIOS
           </Typography>
           
           <AlertDialog>
@@ -241,77 +193,36 @@ export default function ExtListPagos() {
           </IconButton>
         </div>
         <Divider />
-        <List>{tertiaryListItems}</List>
+        <List>{secondaryListItems}</List>
         <Divider />
         
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-            
-          <Grid container spacing={1}>
-          <Grid container item xs={12} spacing={3}>
-         
-            <Grid item xs={3}>
-            
-              <Button
-                fullWidth
-                variant="contained"
-                color="black"
-                onClick={() => {getAllPagos()}}
-              >
-                
-                Consultar
-              </Button>
-            
-            </Grid>
-           
-            </Grid>
-            <Grid container item xs={12} spacing={3}>
-            <Grid item xs>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>                    
-                      <TableCell>Fecha</TableCell>
-                      <TableCell align="right">Negocio</TableCell>
-                      <TableCell align="right">Total</TableCell>
+
+          <TableContainer component={Paper}>
+            <Table className={classes.table} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>                  
+                  <TableCell>Fecha</TableCell>                  
+                  <TableCell align="right">Total</TableCell>
+                  
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {movimientos.map((m) => (
+                    <TableRow key={m._id}>
+                      <TableCell component="th" scope="row">{m.fecha}</TableCell>                      
+                      <TableCell align="right">{m.total}</TableCell>
                     </TableRow>
-                  </TableHead>
-                  
-                  <TableBody>
-                    {tarjetas.map((m) => (
-                      <TableRow key={m._id}>
-                        <TableCell component="th" scope="row">{m.fecha}</TableCell>
-                        <TableCell align="right">{m.cuitNegocio}</TableCell>                                        
-                        <TableCell align="right">{m.total}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                  
-                </Table>
-              </TableContainer>
-            </Grid>
-            
-            </Grid>
-            <Grid item xs={3}>
-            
-              <Button
-                fullWidth
-                variant="contained"
-                color="black"
-                onClick={getEstadoBanco}
-              >
-                
-                Registrar 
-              </Button>
-            
-            </Grid>
-          </Grid>
-          
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
         </Container>
       </main>
-
     </div>
   );
 }

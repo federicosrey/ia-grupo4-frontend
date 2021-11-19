@@ -16,14 +16,14 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
-    <Link  style={{textDecoration:'none', color: 'gray'}} to = "/dash">
+    {/* <Link  style={{textDecoration:'none', color: 'gray'}} to = "/dash">
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItem>
-    </Link>  
+    </Link>  */} 
     <Link  style={{textDecoration:'none', color: 'gray'}} to = "/movimientos">
         <ListItem button>
           <ListItemIcon>
@@ -38,6 +38,14 @@ export const mainListItems = (
           <PaymentIcon />
         </ListItemIcon>
         <ListItemText primary="Productos" />
+      </ListItem>
+    </Link>
+    <Link  style={{textDecoration:'none', color: 'gray'}} to = "/uLiquidaciones">
+      <ListItem button>
+        <ListItemIcon>
+          <PaymentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Liquidaciones" />
       </ListItem>
     </Link>
     <Link  style={{textDecoration:'none', color: 'gray'}} to = "/perfil">
@@ -62,28 +70,20 @@ export const mainListItems = (
 export const secondaryListItems = (
   
     <div>
-      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/ndash">
+      {/* <Link  style={{textDecoration:'none', color: 'gray'}} to = "/ndash">
         <ListItem button>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-      </Link>  
+      </Link>   */}
       <Link  style={{textDecoration:'none', color: 'gray'}} to = "/nmovimientos">
         <ListItem button>
           <ListItemIcon>
             <PaymentIcon />
           </ListItemIcon>
           <ListItemText primary="Movimientos" />
-        </ListItem>
-      </Link>
-      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/nperfil">
-        <ListItem button>
-          <ListItemIcon>
-            <PeopleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Perfil" />
         </ListItem>
       </Link>
       <Link  style={{textDecoration:'none', color: 'gray'}} to = "/cobrar">
@@ -94,20 +94,37 @@ export const secondaryListItems = (
           <ListItemText primary="Cobrar" />
         </ListItem>
       </Link>
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/nPagos">
+        <ListItem button>
+          <ListItemIcon>
+            <ShoppingCartIcon />
+          </ListItemIcon>
+          <ListItemText primary="Pagos" />
+        </ListItem>
+      </Link>
+      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/nperfil">
+        <ListItem button>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Perfil" />
+        </ListItem>
+      </Link>
+      
     </div>
   );
 
   export const tertiaryListItems = (
   
     <div>
-      <Link  style={{textDecoration:'none', color: 'gray'}} to = "/adash">
+     {/*  <Link  style={{textDecoration:'none', color: 'gray'}} to = "/adash">
         <ListItem button>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-      </Link>  
+      </Link>   */}
       <Link  style={{textDecoration:'none', color: 'gray'}} to = "/lusuarios">
         <ListItem button>
           <ListItemIcon>
